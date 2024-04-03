@@ -23,7 +23,7 @@ public class App extends Application {
 
     //services no DI cuz of nature of the app class
 
-    private final static IshowMessage showMessage = new ShowMessage();
+    public final static IshowMessage showMessage = new ShowMessage();
     private final static IloadFXML loader = new LoadFXML();
     public final static ImenuSwitch menuSwitch = new MenuSwitch();
     public static ScreenSize screenService;

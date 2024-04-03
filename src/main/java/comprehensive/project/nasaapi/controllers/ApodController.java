@@ -2,7 +2,6 @@ package comprehensive.project.nasaapi.controllers;
 
 import comprehensive.project.nasaapi.App;
 import javafx.fxml.FXML;
-import javafx.scene.layout.StackPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 

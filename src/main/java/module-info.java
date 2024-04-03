@@ -5,6 +5,7 @@ module comprehensive.project.nasaapi {
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.desktop;
 
     opens comprehensive.project.nasaapi to javafx.fxml;
     exports comprehensive.project.nasaapi;
