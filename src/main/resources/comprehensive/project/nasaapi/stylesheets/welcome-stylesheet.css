@@ -1,0 +1,11 @@
+@import url("variables.css");
+
+.btnBox .btnBox{
+    -fx-spacing: 1.8em;
+}
+
+.btnBox{
+    -fx-alignment: CENTER;
+    -fx-spacing: 1em;
+}
+

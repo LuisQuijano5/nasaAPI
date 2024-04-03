@@ -1,0 +1,48 @@
+@import url("variables.css");
+
+
+*{
+    -fx-background-color: -bgColor0;
+    -fx-text-fill: -txtColor0;
+    -fx-alignment: CENTER;
+    -fx-spacing: 0.8em;
+    -fx-font-weight: bold;
+}
+
+#container{
+    -fx-border-style: solid;
+    -fx-border-color: -txtColor0;
+    -fx-border-width: 0 8px 0 0;
+}
+
+#titleContainer{
+    -fx-font-size: 1.8em;
+    -fx-spacing: 0.4em;
+    -fx-padding: 0 0 0.8em 0;
+    -fx-border-style: solid;
+    -fx-border-color: -txtColor0;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.button{
+    -fx-pref-width: 268px;
+    -fx-font-size: 1.2em;
+}
+
+.button:hover{
+    -fx-font-size: 1.4em;
+    -fx-background-color: -bgColor1;
+    -fx-cursor: hand;
+}
+
+#iconContainer{
+    -fx-padding: 0.8em 0 0 0;
+    -fx-spacing: 1.2em;
+    -fx-border-style: solid;
+    -fx-border-color: -txtColor0;
+    -fx-border-width: 2px 0 0 0;
+}
+
+#iconContainer *:hover{
+    -fx-cursor: hand;
+}

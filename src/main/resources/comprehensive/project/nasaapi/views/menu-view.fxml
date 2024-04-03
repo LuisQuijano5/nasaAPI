@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:id="container"
+      fx:controller="comprehensive.project.nasaapi.controllers.MenuController"
+      stylesheets="@../stylesheets/menu-stylesheet.css">
+
+    <HBox fx:id="titleContainer">
+        <Label>NASA API</Label>
+        <FontIcon iconLiteral="fas-space-shuttle" iconColor="white" iconSize="20"/>
+    </HBox>
+
+    <Button fx:id="exitBtn" onAction="#exit">
+        <graphic>
+            <FontIcon iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
+        </graphic>
+    </Button>
+
+    <Button fx:id="apodBtn" onAction="#goAPOD" text="APOD"/>
+    <Button fx:id="galleryBtn" onAction="#goGallery" text="Gallery"/>
+    <Button fx:id="epicBtn" onAction="#goEPIC" text="EPIC"/>
+    <Button fx:id="accountBtn" onAction="#goAccount" text="Account"/>
+
+    <HBox fx:id="iconContainer">
+        <FontIcon iconLiteral="fab-github" iconColor="white" iconSize="40" onMouseClicked="#goToGithub"/>
+        <FontIcon iconLiteral="fas-file-alt" iconColor="white" iconSize="40" onMouseClicked="#goToDocumentation"/>
+        <FontIcon iconLiteral="fas-question-circle" iconColor="white" iconSize="40" onMouseClicked="#showHelp"/>
+    </HBox>
+
+</VBox>

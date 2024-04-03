@@ -1,0 +1,9 @@
+@import url("variables.css");
+
+.button{
+    -fx-pref-width: 8em;
+}
+
+#fieldContainer #passwordField, #fieldContainer #usernameField{
+    -fx-text-fill: black;
+}

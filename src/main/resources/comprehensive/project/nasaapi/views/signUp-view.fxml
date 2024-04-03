@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:id="container"
+      stylesheets="@../stylesheets/signLog-stylesheet.css, @../stylesheets/general-stylesheet.css"
+      fx:controller="comprehensive.project.nasaapi.controllers.SignUpController">
+
+    <Label styleClass="title">Sign Up</Label>
+
+    <VBox styleClass="btnBox">
+        <Button fx:id="goBackBtn" onAction="#goBack">
+            <graphic>
+                <FontIcon iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
+            </graphic>
+        </Button>
+    </VBox>
+
+    <VBox id="fieldContainer">
+        <Label text="Username:" />
+        <TextField fx:id="usernameField" />
+        <Label text="Password:" />
+        <PasswordField fx:id="passwordField" />
+    </VBox>
+
+    <VBox styleClass="btnBox">
+        <Button fx:id="submitBtn" onAction="#submit" text="Submit"/>
+    </VBox>
+
+</VBox>

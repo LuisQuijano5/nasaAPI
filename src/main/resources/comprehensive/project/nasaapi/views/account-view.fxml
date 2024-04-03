@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@../stylesheets/account-stylesheet.css, @../stylesheets/general-stylesheet.css"
+            fx:controller="comprehensive.project.nasaapi.controllers.AccountController">
+
+    <top>
+        <HBox fx:id="topContainer">
+            <VBox fx:id="menuSwitchContainer" onMouseClicked="#changeMenuVisibility">
+                <StackPane>
+                    <FontIcon fx:id="openEye" iconLiteral="far-eye" iconSize="24" iconColor="white"/>
+                    <FontIcon fx:id="closedEye" iconLiteral="far-eye-slash" iconSize="24" iconColor="white"/>
+                </StackPane>
+                <Label styleClass="tag">Menu</Label>
+            </VBox>
+            <Label styleClass="title">Account</Label>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox fx:id="centerContainer">
+
+        </VBox>
+    </center>
+
+</BorderPane>

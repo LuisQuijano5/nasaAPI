@@ -1,0 +1,48 @@
+@import url("variables.css");
+
+*{
+    -fx-text-fill: -txtColor0;
+}
+
+#topContainer, #centerContainer{
+    -fx-padding: 0.4em 0 0.2em 0.8em;
+}
+
+#menuSwitchContainer{
+    -fx-alignment: CENTER;
+    -fx-padding: 0.4em 0.4em 0.4em 0.4em;
+}
+
+#topContainer, #container{
+    -fx-background-color: -bgColor1;
+    -fx-spacing: 24px;
+}
+
+#centerContainer{
+    -fx-background-color: -bgColor2;
+}
+
+#menuSwitchContainer:hover {
+    -fx-cursor: hand;
+    -fx-background-color: -bgColor0;
+}
+
+.title{
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+}
+
+.tag{
+    -fx-font-size: 0.6em;
+}
+
+.btnBox .button:hover {
+    -fx-background-color: -bgColor2;
+    -fx-cursor: hand;
+}
+
+.btnBox .button{
+    -fx-background-color: -bgColor0;
+    -fx-padding: 0.2em;
+    -fx-font-size: 1.4em;
+}
