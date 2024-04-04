@@ -1,4 +1,5 @@
 @import url("variables.css");
+/* Use a button inside a btnBox class to style the button by default :) */
 
 *{
     -fx-text-fill: -txtColor0;
@@ -10,7 +11,7 @@
 
 #menuSwitchContainer{
     -fx-alignment: CENTER;
-    -fx-padding: 0.4em 0.4em 0.4em 0.4em;
+    -fx-padding: 0.4em;
 }
 
 #topContainer, #container{
@@ -38,11 +39,18 @@
 
 .btnBox .button:hover {
     -fx-background-color: -bgColor2;
-    -fx-cursor: hand;
 }
 
 .btnBox .button{
     -fx-background-color: -bgColor0;
     -fx-padding: 0.2em;
     -fx-font-size: 1.4em;
+}
+
+.button:hover{
+    -fx-cursor: hand;
+}
+
+.blackText {
+    -fx-text-fill: black;
 }

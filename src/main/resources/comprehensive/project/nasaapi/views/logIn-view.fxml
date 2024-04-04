@@ -9,24 +9,47 @@
       stylesheets="@../stylesheets/signLog-stylesheet.css, @../stylesheets/general-stylesheet.css"
       fx:controller="comprehensive.project.nasaapi.controllers.LogInController">
 
-    <Label styleClass="title">Log In</Label>
-
-    <VBox styleClass="btnBox">
+    <HBox styleClass="btnBox, centerContainer">
         <Button fx:id="goBackBtn" onAction="#goBack">
             <graphic>
-                <FontIcon iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
+                <FontIcon fx:id="returnIcon" iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
             </graphic>
         </Button>
-    </VBox>
+        <Label styleClass="title">Log In</Label>
+    </HBox>
 
-    <VBox id="fieldContainer">
-        <Label text="Username:" />
-        <TextField fx:id="usernameField" />
-        <Label text="Password:" />
-        <PasswordField fx:id="passwordField" />
-    </VBox>
+    <HBox styleClass="centerContainer">
+        <VBox id="fieldContainer">
 
-    <VBox styleClass="btnBox">
-        <Button fx:id="submitBtn" onAction="#submit" text="Submit"/>
-    </VBox>
+            <VBox style="-fx-spacing: 0.4em">
+                <Label text="Username:" />
+                <TextField styleClass="blackText" fx:id="usernameField" promptText="If admin use 'admin'" />
+            </VBox>
+            <VBox style="-fx-spacing: 0.4em">
+                <Label text="Password:" />
+                <StackPane>
+                    <HBox fx:id="passwordContainer">
+                        <PasswordField styleClass="blackText" fx:id="passwordField"/>
+                        <VBox styleClass="iconContainer, centerContainer" onMouseClicked="#changePasswordVisibility">
+                            <FontIcon fx:id="closedEye" iconLiteral="far-eye-slash" iconSize="24" iconColor="white"/>
+                        </VBox>
+                    </HBox>
+                    <HBox fx:id="visiblePasswordContainer" visible="false">
+                        <TextField styleClass="blackText" fx:id="visiblePasswordField"/>
+                        <VBox styleClass="iconContainer, centerContainer" onMouseClicked="#changePasswordVisibility">
+                            <FontIcon fx:id="openEye" iconLiteral="far-eye" iconSize="24" iconColor="white"/>
+                        </VBox>
+                    </HBox>
+                </StackPane>
+            </VBox>
+
+        </VBox>
+    </HBox>
+
+    <HBox styleClass="btnBox, centerContainer">
+        <VBox styleClass="btnBox">
+            <Button fx:id="submitBtn" onAction="#submit" text="Submit"/>
+        </VBox>
+    </HBox>
+
 </VBox>

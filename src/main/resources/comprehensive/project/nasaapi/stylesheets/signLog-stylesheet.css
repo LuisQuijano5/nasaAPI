@@ -1,9 +1,47 @@
 @import url("variables.css");
 
-.button{
-    -fx-pref-width: 8em;
+#container{
+    -fx-border-style: solid;
+    -fx-border-color: -txtColor0;
+    -fx-border-radius: 10;
+    -fx-border-width: 8px;
+
+    -fx-padding: 1em;
 }
 
-#fieldContainer #passwordField, #fieldContainer #usernameField{
-    -fx-text-fill: black;
+.centerContainer{
+    -fx-alignment: CENTER;
 }
+
+.btnBox{
+    -fx-spacing: 1em;
+}
+
+#goBackBtn{
+    -fx-pref-width: 2em;
+}
+
+#passwordField, #visiblePasswordField, #usernameField, #confirmPasswordField, #visibleConfirmPasswordField {
+    -fx-pref-width: 16em;
+    -fx-max-width: 16em;
+}
+
+#visiblePasswordContainer, #passwordContainer, #confirmPasswordContainer, #confirmVisiblePasswordContainer {
+    -fx-spacing: 0.6em;
+}
+
+#fieldContainer{
+    -fx-spacing: 1em;
+    -fx-pref-width: 20em;
+    -fx-padding: 0 0 0.6em 0;
+}
+
+.iconContainer{
+    -fx-pref-width: 2em;
+}
+
+.iconContainer:hover {
+    -fx-background-color: -bgColor2;
+    -fx-cursor: hand;
+}
+

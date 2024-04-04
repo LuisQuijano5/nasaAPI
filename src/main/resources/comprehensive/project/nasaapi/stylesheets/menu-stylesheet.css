@@ -24,12 +24,11 @@
 }
 
 .button{
-    -fx-pref-width: 268px;
+    -fx-pref-width: 11.67em;
     -fx-font-size: 1.2em;
 }
 
 .button:hover{
-    -fx-font-size: 1.4em;
     -fx-background-color: -bgColor1;
     -fx-cursor: hand;
 }
@@ -51,6 +50,6 @@
 }
 
 #themeContainer {
-    -fx-pref-width: 40px;
+    -fx-pref-width: 1.67em;
 }
 

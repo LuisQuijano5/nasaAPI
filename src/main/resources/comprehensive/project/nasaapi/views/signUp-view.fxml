@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
@@ -10,25 +9,59 @@
       stylesheets="@../stylesheets/signLog-stylesheet.css, @../stylesheets/general-stylesheet.css"
       fx:controller="comprehensive.project.nasaapi.controllers.SignUpController">
 
-    <Label styleClass="title">Sign Up</Label>
-
-    <VBox styleClass="btnBox">
+    <HBox styleClass="btnBox, centerContainer">
         <Button fx:id="goBackBtn" onAction="#goBack">
             <graphic>
-                <FontIcon iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
+                <FontIcon fx:id="returnIcon" iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
             </graphic>
         </Button>
-    </VBox>
+        <Label styleClass="title">Sign Up</Label>
+    </HBox>
 
-    <VBox id="fieldContainer">
-        <Label text="Username:" />
-        <TextField fx:id="usernameField" />
-        <Label text="Password:" />
-        <PasswordField fx:id="passwordField" />
-    </VBox>
+    <HBox styleClass="centerContainer">
+        <VBox id="fieldContainer">
 
-    <VBox styleClass="btnBox">
-        <Button fx:id="submitBtn" onAction="#submit" text="Submit"/>
-    </VBox>
+            <VBox style="-fx-spacing: 0.4em">
+                <Label text="Choose Username:" />
+                <TextField styleClass="blackText" fx:id="usernameField" promptText="e.g. Peña123" />
+            </VBox>
+            <VBox style="-fx-spacing: 0.4em">
+                <Label text="Choose a Password:" />
+                <StackPane>
+                    <HBox fx:id="passwordContainer">
+                        <PasswordField styleClass="blackText" fx:id="passwordField" promptText="Use letters and numbers"/>
+                        <VBox styleClass="iconContainer, centerContainer" onMouseClicked="#changePasswordVisibility">
+                            <FontIcon fx:id="closedEye" iconLiteral="far-eye-slash" iconSize="24" iconColor="white"/>
+                        </VBox>
+                    </HBox>
+                    <HBox fx:id="visiblePasswordContainer" visible="false">
+                        <TextField styleClass="blackText" fx:id="visiblePasswordField"/>
+                        <VBox styleClass="iconContainer, centerContainer" onMouseClicked="#changePasswordVisibility">
+                            <FontIcon fx:id="openEye" iconLiteral="far-eye" iconSize="24" iconColor="white"/>
+                        </VBox>
+                    </HBox>
+                </StackPane>
+            </VBox>
+            <VBox style="-fx-spacing: 0.4em">
+                <Label text="Confirm your Password:" />
+
+                <StackPane>
+                    <HBox fx:id="confirmPasswordContainer">
+                        <PasswordField styleClass="blackText" fx:id="confirmPasswordField"/>
+                    </HBox>
+                    <HBox fx:id="visibleConfirmPasswordContainer" visible="false">
+                        <TextField styleClass="blackText" fx:id="visibleConfirmPasswordField"/>
+                    </HBox>
+                </StackPane>
+            </VBox>
+
+        </VBox>
+    </HBox>
+
+    <HBox styleClass="centerContainer">
+        <VBox styleClass="btnBox">
+            <Button fx:id="submitBtn" onAction="#submit" text="Submit"/>
+        </VBox>
+    </HBox>
 
 </VBox>
