@@ -3,8 +3,22 @@ package comprehensive.project.nasaapi.controllers;
 import comprehensive.project.nasaapi.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class MenuController {
+    @FXML
+    StackPane themeContainer;
+    @FXML
+    FontIcon returnIcon, moonIcon, sunIcon;
+    @FXML
+    VBox container;
+
+    public void initialize(){
+        if(!App.darkTheme){ changeTheme(); }
+    }
 
     @FXML
     private void goAPOD() {
@@ -53,5 +67,24 @@ public class MenuController {
             // Handle potential exceptions
             App.showMessage.alert(Alert.AlertType.ERROR, "Couldnt open link", "Error opening link: " + e.getMessage(), "Please check the method or browse requirements");
         }
+    }
+
+    @FXML
+    private void changeTheme() {
+        themeContainer.setVisible(false);// to avoid semichanges
+        if(App.darkTheme) { // means light theme has to be applied lol :X
+            moonIcon.setVisible(true);
+            sunIcon.setVisible(false);
+            returnIcon.setIconColor(Paint.valueOf("black")); //manually cuz it's the graphic of a button
+            App.themeHandler.applyLightTheme(container);
+        } else {
+            moonIcon.setVisible(false);
+            sunIcon.setVisible(true);
+            returnIcon.setIconColor(Paint.valueOf("white")); //manually cuz it's the graphic of a button
+            App.themeHandler.removeLightTheme(container);
+        }
+        App.darkTheme = !App.darkTheme;
+        App.changeCenterTheme(); //changing the current api theme
+        themeContainer.setVisible(true);
     }
 }

@@ -1,6 +1,5 @@
 @import url("variables.css");
 
-
 *{
     -fx-background-color: -bgColor0;
     -fx-text-fill: -txtColor0;
@@ -43,6 +42,15 @@
     -fx-border-width: 2px 0 0 0;
 }
 
-#iconContainer *:hover{
+#iconContainer *:hover, #themeContainer{
     -fx-cursor: hand;
 }
+
+#themeContainer:hover {
+    -fx-background-color: -bgColor1;
+}
+
+#themeContainer {
+    -fx-pref-width: 40px;
+}
+

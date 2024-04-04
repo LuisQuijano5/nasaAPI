@@ -8,16 +8,19 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:id="container"
       fx:controller="comprehensive.project.nasaapi.controllers.MenuController"
-      stylesheets="@../stylesheets/menu-stylesheet.css">
+      stylesheets="@../stylesheets/menu-stylesheet.css, @../stylesheets/variables.css">
 
     <HBox fx:id="titleContainer">
         <Label>NASA API</Label>
-        <FontIcon iconLiteral="fas-space-shuttle" iconColor="white" iconSize="20"/>
+        <StackPane fx:id="themeContainer" styleClass="iconContainer" onMouseClicked="#changeTheme">
+            <FontIcon fx:id="moonIcon" iconLiteral="fas-moon" iconColor="black" iconSize="24" visible="false"/>
+            <FontIcon fx:id="sunIcon" iconLiteral="fas-sun" iconColor="white" iconSize="24"/>
+        </StackPane>
     </HBox>
 
     <Button fx:id="exitBtn" onAction="#exit">
         <graphic>
-            <FontIcon iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
+            <FontIcon fx:id="returnIcon" iconLiteral="fas-arrow-left" iconColor="white" iconSize="36"/>
         </graphic>
     </Button>
 
