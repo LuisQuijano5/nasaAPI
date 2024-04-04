@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="container"
@@ -24,9 +26,19 @@
     </top>
 
     <center>
-        <VBox fx:id="centerContainer">
-
-        </VBox>
+        <ScrollPane fitToWidth="true">
+            <content>
+                <VBox fx:id="centerContainer" alignment="CENTER">
+                    <children>
+                        <DatePicker fx:id="datePicker" style="-fx-text-fill: #000"/>
+                    </children>
+                    <Label fx:id="dateText"/>
+                    <Label fx:id="titleText"/>
+                    <ImageView fx:id="imageView" fitWidth="600" fitHeight="400" preserveRatio="true" />
+                    <Text fx:id="imageDescription" />
+                </VBox>
+            </content>
+        </ScrollPane>
     </center>
 
 </BorderPane>
