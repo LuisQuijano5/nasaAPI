@@ -21,11 +21,12 @@ public class App extends Application {
 
     //services no DI cuz of nature of the app class
     private final static IloadFXML loader = new LoadFXML();
-    public final static IshowMessage showMessage = new ShowMessage();
+    public final static ShowMessage showMessage = new ShowMessage();
     public final static ImenuSwitch menuSwitch = new MenuSwitch();
     public final static IthemeHandler themeHandler = new ThemeHandler();
     public final static IinputVerifierPassword inputVerifierPassword = new InputVerifierPassword();
     public final static IpasswordSwitch passwordSwitch = new PasswordSwitch();
+    public final static Iencoder encoder = new Encoder();
     public static ScreenSize screenService;
 
     //user preferences

@@ -62,11 +62,14 @@ public class SignUpController {
             return;
         }
 
-        // if everything is correct we sign In
+        // if everything is right we sign In
         signIn();
     }
 
     private void signIn() {
+        byte[] password = App.encoder.encode(passwordField.getText());
+
+
         App.showMenu();
         App.changeView("apod");
     }
