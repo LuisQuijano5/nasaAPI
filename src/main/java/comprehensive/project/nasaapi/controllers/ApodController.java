@@ -2,7 +2,9 @@ package comprehensive.project.nasaapi.controllers;
 
 import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.apiconnection.APIConnectionAPOD;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -38,6 +40,11 @@ public class ApodController {
     private Text imageDescription;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private Button showBtn;
+    @FXML
+    private Label errorText;
+    @FXML
     private boolean menuVisibility = true;
 
     public void initialize(){
@@ -45,22 +52,24 @@ public class ApodController {
 
         try {
             LocalDate currentDate = LocalDate.now();
-            //LocalDate selectedDate =  datePicker.getValue();
-            String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            datePicker.setPromptText(currentDate.toString());
 
-            APIConnectionAPOD.setCustomDate(formattedDate);
+            showBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    LocalDate selectedDate = datePicker.getValue();
 
-            updateInfo();
-
-            datePicker.setOnAction(event -> {
-                LocalDate selectedDate = datePicker.getValue();
-                if (selectedDate != null) {
-                    updateQuery(selectedDate);
+                    if (selectedDate != null) {
+                        datePicker.setPromptText(selectedDate.toString());
+                        updateQuery(selectedDate);
+                    }else {
+                        updateQuery(currentDate);
+                    }
                 }
             });
 
         }catch (Exception e){
-            e.printStackTrace();
+            errorText.setText(e.toString());
         }
     }
 
@@ -76,6 +85,7 @@ public class ApodController {
             titleText.setText("");
             imageView.setImage(null);
             imageDescription.setText("");
+            errorText.setText("");
 
             JsonObject apodData = APIConnectionAPOD.getApod();
 
@@ -85,15 +95,15 @@ public class ApodController {
             String title = apodData.get("title").getAsString();
             titleText.setText(title);
 
-            URL imageUrl = new URL(apodData.get("hdurl").getAsString());
-            Image image = new Image(imageUrl.openStream());
+            String imageUrl = apodData.get("url").getAsString();
+            Image image = new Image(imageUrl);
             imageView.setImage(image);
 
             String description = apodData.get("explanation").getAsString();
             imageDescription.setWrappingWidth(600);
             imageDescription.setText(description);
         }catch (Exception e){
-            e.printStackTrace();
+            errorText.setText(e.toString());
         }
     }
 
