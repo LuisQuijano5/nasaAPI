@@ -14,4 +14,7 @@ module comprehensive.project.nasaapi {
 
     exports comprehensive.project.nasaapi.controllers;
     opens comprehensive.project.nasaapi.controllers to javafx.fxml;
+    opens comprehensive.project.nasaapi.database.DAO to com.google.gson;
+
+
 }

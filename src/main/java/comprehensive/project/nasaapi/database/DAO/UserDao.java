@@ -1,14 +1,12 @@
 package comprehensive.project.nasaapi.database.DAO;
 
+import com.google.gson.*;
 import comprehensive.project.nasaapi.database.Connection;
-import comprehensive.project.nasaapi.models.User;
-import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
-public class UserDao implements Dao<User>
+public class UserDao
 {
     private String baseUrl = "user/";
     private final Gson gson = new Gson();
@@ -19,11 +17,11 @@ public class UserDao implements Dao<User>
                 "password": "%s"}""", name, isAdmin, password);
         String response = Connection.sendRequest(baseUrl, "POST", body);
 
-        Map<String, Object> responseMap = gson.fromJson(response, Map.class);
-        if ((boolean) responseMap.get("success")) {
-            return new AuxDao(true, String.valueOf(responseMap.get("message")));
+        Response responseObj = gson.fromJson(response, Response.class);
+        if (responseObj.success) {
+            return new AuxDao(true, responseObj.message, responseObj.userId);
         } else {
-            return new AuxDao(false, String.valueOf(responseMap.get("message")));
+            return new AuxDao(false, responseObj.message);
         }
     }
 
@@ -34,11 +32,11 @@ public class UserDao implements Dao<User>
                 "password": "%s"}""", name, password);
         String response = Connection.sendRequest(newBaseUrl, "POST", body);
 
-        Map<String, Object> responseMap = gson.fromJson(response, Map.class);
-        if ((boolean) responseMap.get("success")) {
-            return new AuxDao(true,  String.valueOf(responseMap.get("message")), (String) responseMap.get("token"));
+        Response responseObj = gson.fromJson(response, Response.class);
+        if (responseObj.success) {
+            return new AuxDao(true, responseObj.message, responseObj.data.toString(), responseObj.userId, responseObj.isCondition);
         } else {
-            return new AuxDao(false,  String.valueOf(responseMap.get("message")));
+            return new AuxDao(false, responseObj.message);
         }
     }
 
@@ -46,33 +44,26 @@ public class UserDao implements Dao<User>
         String newBaseUrl = baseUrl + "count";
         String response = Connection.sendGETRequest(newBaseUrl);
 
-        Map<String, Object> responseMap = gson.fromJson(response, Map.class);
-        if ((boolean) responseMap.get("success")) {
-            return new AuxDao(true,  String.valueOf(responseMap.get("message")), (boolean) responseMap.get("isAdmin"));
+        Response responseObj = gson.fromJson(response, Response.class);
+        if (responseObj.success) {
+            return new AuxDao(true,  responseObj.message, responseObj.isCondition);
         } else {
-            return new AuxDao(false,  String.valueOf(responseMap.get("message")));
+            return new AuxDao(false,  responseObj.message);
         }
     }
 
     public AuxDao checkName(String name) throws IOException{
-        String newBaseUrl = baseUrl + "checkName?name=" + name;
+        String encodedUserInput = URLEncoder.encode(name, StandardCharsets.UTF_8);
+        String newBaseUrl = baseUrl + "checkName?name=" + encodedUserInput;
         String response = Connection.sendGETRequest(newBaseUrl);
 
-        Map<String, Object> responseMap = gson.fromJson(response, Map.class);
-        if ((boolean) responseMap.get("success")) {
-            return new AuxDao(true, String.valueOf(responseMap.get("message")));
+        Response responseObj = gson.fromJson(response, Response.class);
+        if (responseObj.success) {
+            return new AuxDao(true, responseObj.message);
         } else {
-            return new AuxDao(false,  String.valueOf(responseMap.get("message")));
+            return new AuxDao(false,  responseObj.message);
         }
     }
 
-    @Override
-    public Optional<User> findById(int id, int br) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<User> findAll(int br) {
-        return null;
-    }
 }
+
