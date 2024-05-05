@@ -16,7 +16,7 @@
 
 #topContainer, #container{
     -fx-background-color: -bgColor1;
-    -fx-spacing: 24px;
+    -fx-spacing: 1em;
 }
 
 #centerContainer{
@@ -53,4 +53,16 @@
 
 .blackText {
     -fx-text-fill: black;
+}
+
+#toggleBtnsContainer {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+#toggleBtnsContainer .button{
+    -fx-background-color: -bgColor1;
+}
+
+#toggleBtnsContainer .button:hover{
+    -fx-background-color: -bgColor2;
 }

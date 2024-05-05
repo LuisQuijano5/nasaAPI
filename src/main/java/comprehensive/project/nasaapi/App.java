@@ -1,5 +1,6 @@
 package comprehensive.project.nasaapi;
 
+import comprehensive.project.nasaapi.models.User;
 import comprehensive.project.nasaapi.services.*;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -11,6 +12,10 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class App extends Application {
+    //user
+    public static User currentUser;
+
+
     //important components of the app class
     private static Scene scene;
     private static final BorderPane root = new BorderPane(); // app container
