@@ -15,7 +15,6 @@ public class User
 
     public User() {
     }
-
     public User(int id, String name, boolean isAdmin, String token) {
         this.id = id;
         this.name = name;

@@ -9,7 +9,8 @@ import java.util.Scanner;
 
 public class Connection
 {
-    private static String baseUrl = "http://localhost:3000/api/";
+    private static String baseUrl = "https://our-brand-420000.uc.r.appspot.com/api/";
+    //private static String baseUrl = "http://localhost:3000/api/";
 
     public static String sendRequest(String restOfUrl, String requestMethod, String body) throws IOException{
         String requestUrl = baseUrl + restOfUrl;
