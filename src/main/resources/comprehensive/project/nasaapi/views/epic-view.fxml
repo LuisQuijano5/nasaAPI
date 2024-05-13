@@ -5,11 +5,12 @@
 
 
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="container"
             stylesheets="@../stylesheets/epic-stylesheet.css, @../stylesheets/general-stylesheet.css"
-            fx:controller="comprehensive.project.nasaapi.controllers.EpicController">
+            fx:controller="comprehensive.project.nasaapi.controllers.MarsRoversController">
 
     <top>
         <HBox fx:id="topContainer">
@@ -20,14 +21,40 @@
                 </StackPane>
                 <Label styleClass="tag">Menu</Label>
             </VBox>
-            <Label styleClass="title">EPIC</Label>
+            <Label styleClass="title">Mars Rover</Label>
         </HBox>
     </top>
 
     <center>
-        <VBox fx:id="centerContainer">
+        <BorderPane>
+            <top>
+                <VBox spacing="10" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="Select Date:"/>
+                        <DatePicker fx:id="datepickerContainer"/>
+                        <ComboBox fx:id="roverComboBox" promptText="Select Rover"/>
+                        <ComboBox fx:id="cameraComboBox" promptText="Select Camera"/>
+                        <Button fx:id="searchButton" text="Buscar"  onAction="#searchImages" />
+                    </HBox>
+                    <Label fx:id="resultLabel"/>
+                </VBox>
+            </top>
 
-        </VBox>
+            <center>
+                <ScrollPane fx:id="srollPaneRover" fitToWidth="true"  fitToHeight="true">
+                    <content>
+                        <TilePane fx:id="imageTilePane" hgap="10" vgap="10" tileAlignment="TOP_LEFT">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                        </TilePane>
+                    </content>
+                </ScrollPane>
+            </center>
+        </BorderPane>
     </center>
 
 </BorderPane>

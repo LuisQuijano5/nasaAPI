@@ -1,0 +1,100 @@
+@import url("variables.css");
+
+#datepickerContainer * {
+    -fx-background-color: -bgColor1;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 1px;
+    -fx-text-fill: -txtColor0;
+}
+
+#roverComboBox * {
+    -fx-background-color: -bgColor1;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 1px;
+    -fx-text-fill: -txtColor0;
+}
+
+#cameraComboBox * {
+    -fx-background-color: -bgColor1;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 1px;
+    -fx-text-fill: -txtColor0;
+}
+
+#searchButton {
+    -fx-background-color: -bgColor2;
+
+}
+
+#imageTilePane {
+    -fx-background-color: -bgColor2;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 1px;
+    -fx-text-fill: -txtColor0;
+}
+
+#datepickerContainer .date-picker-popup {
+    -fx-background-color: -bgColor2;
+}
+
+#datepickerContainer .date-picker-popup .month-year-pane {
+    -fx-background-color: -bgColor3;
+}
+
+#datepickerContainer .date-picker-popup .date-cell {
+    -fx-background-color: -bgColor2;
+    -fx-text-fill: -txtColor0;
+}
+
+#datepickerContainer .date-picker-popup .date-cell:hover {
+    -fx-background-color: -bgColor3;
+}
+
+#datepickerContainer .date-picker-popup .date-cell.selected {
+    -fx-background-color: -bgColor0;
+    -fx-text-fill: -txtColor0;
+}
+
+#datepickerContainer .date-picker-popup .spinner {
+    -fx-background-color: -bgColor3;
+}
+
+#datepickerContainer .date-picker-popup .spinner .button:hover {
+    -fx-background-color: -bgColor2;
+}
+
+.lightTheme #datepickerContainer * {
+    -fx-background-color: -bgColor1;
+    -fx-border-color: -bgColor3;
+    -fx-text-fill: -txtColor0;
+}
+
+.lightTheme #datepickerContainer .date-picker-popup {
+    -fx-background-color: -bgColor2;
+}
+
+.lightTheme #datepickerContainer .date-picker-popup .month-year-pane {
+    -fx-background-color: -bgColor3;
+}
+
+.lightTheme #datepickerContainer .date-picker-popup .date-cell {
+    -fx-background-color: -bgColor2;
+    -fx-text-fill: -txtColor0;
+}
+
+.lightTheme #datepickerContainer .date-picker-popup .date-cell:hover {
+    -fx-background-color: -bgColor3;
+}
+
+.lightTheme #datepickerContainer .date-picker-popup .date-cell.selected {
+    -fx-background-color: -bgColor0;
+    -fx-text-fill: -txtColor0;
+}
+
+.lightTheme #datepickerContainer .date-picker-popup .spinner {
+    -fx-background-color: -bgColor3;
+}
+
+.lightTheme #datepickerContainer .date-picker-popup .spinner .button:hover {
+    -fx-background-color: -bgColor2;
+}

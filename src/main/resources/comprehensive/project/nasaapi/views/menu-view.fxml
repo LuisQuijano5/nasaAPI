@@ -26,7 +26,7 @@
 
     <Button fx:id="apodBtn" onAction="#goAPOD" text="APOD"/>
     <Button fx:id="galleryBtn" onAction="#goGallery" text="Gallery"/>
-    <Button fx:id="epicBtn" onAction="#goEPIC" text="EPIC"/>
+    <Button fx:id="epicBtn" onAction="#goEPIC" text="Mars Rover"/>
     <Button fx:id="accountBtn" onAction="#goAccount" text="Account"/>
 
     <HBox fx:id="iconContainer">
