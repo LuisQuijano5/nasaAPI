@@ -26,7 +26,8 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'comprehensive.project.nasaapi'
-    mainClass = 'comprehensive.project.nasaapi.App'
+    //Cmbiada la main-class
+    mainClass = 'comprehensive.project.nasaapi.EnterPoint'
 }
 
 javafx {
@@ -35,6 +36,10 @@ javafx {
 }
 
 dependencies {
+    implementation 'org.openjfx:javafx-controls:21'
+    implementation 'org.openjfx:javafx-fxml:21'
+
+
     implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
         exclude(group: 'org.openjfx')
     }
@@ -64,4 +69,20 @@ jlink {
 
 jlinkZip {
     group = 'distribution'
+}
+
+task customJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'comprehensive.project.nasaapi.EnterPoint'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    with jar
+
+    into('lib') {
+        from { configurations.runtimeClasspath }
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
 }
