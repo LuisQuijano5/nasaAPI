@@ -19,7 +19,14 @@
                 </StackPane>
                 <Label styleClass="tag">Menu</Label>
             </VBox>
+
             <Label styleClass="title">Account</Label>
+
+            <Pane style="-fx-pref-width: 6em"/>
+
+            <VBox fx:id="toggleBtnsContainer">
+
+            </VBox>
         </HBox>
     </top>
 

@@ -1,4 +1,4 @@
 package comprehensive.project.nasaapi.models;
 
-public class UserManager {
+public class Favorites {
 }

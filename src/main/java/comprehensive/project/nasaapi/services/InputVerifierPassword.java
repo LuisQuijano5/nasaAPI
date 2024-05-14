@@ -21,7 +21,6 @@ public class InputVerifierPassword implements IinputVerifierPassword{
             }
 
         });
-
     }
 
     @Override

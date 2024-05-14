@@ -23,7 +23,7 @@
 
             <VBox style="-fx-spacing: 0.4em">
                 <Label text="Username:" />
-                <TextField styleClass="blackText" fx:id="usernameField" promptText="If admin use 'admin'" />
+                <TextField styleClass="blackText" fx:id="usernameField" promptText="Peña123" />
             </VBox>
             <VBox style="-fx-spacing: 0.4em">
                 <Label text="Password:" />

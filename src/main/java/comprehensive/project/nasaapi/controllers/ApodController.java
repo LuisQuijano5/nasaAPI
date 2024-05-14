@@ -7,7 +7,9 @@ import comprehensive.project.nasaapi.models.ivl.Ivl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.google.gson.JsonObject;
@@ -49,9 +51,16 @@ public class ApodController {
     private Label errorText;
     @FXML
     private boolean menuVisibility = true;
+    @FXML
+    VBox centerContainer;
 
     public void initialize(){
-        if(!App.darkTheme){ App.themeHandler.applyLightTheme(container); }
+        if(!App.darkTheme){
+            App.themeHandler.applyLightTheme(container);
+        }
+        if(App.currentUser.getMenuVisibilityPref() == 0){
+            menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
+        }
 
         try {
             LocalDate currentDate = LocalDate.now();

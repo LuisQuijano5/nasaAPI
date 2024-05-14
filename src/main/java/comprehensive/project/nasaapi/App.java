@@ -1,5 +1,6 @@
 package comprehensive.project.nasaapi;
 
+import comprehensive.project.nasaapi.models.User;
 import comprehensive.project.nasaapi.services.*;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -11,6 +12,9 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class App extends Application {
+    //user
+    public static User currentUser;
+
     //important components of the app class
     private static Scene scene;
     private static final BorderPane root = new BorderPane(); // app container
@@ -18,6 +22,7 @@ public class App extends Application {
     // Creating some of the views
     private static Parent welcomeView; // menu view
     private static Parent menuView;
+    public static int menuConfig = 0;
 
     //services no DI cuz of nature of the app class
     private final static IloadFXML loader = new LoadFXML();
@@ -119,7 +124,13 @@ public class App extends Application {
         changeCenterTheme(); //changing the theme or removing it since it's a static var of the app
     }
 
-    public static void showMenu() { root.setLeft(menuView); }
+    public static void showMenu() {
+        if(App.currentUser.getColorModePref() == 0 && menuConfig == 0){
+            menuConfig = 1;
+            menuView = loader.loadFXML("views/menu-view.fxml");
+        }
+        root.setLeft(menuView);
+    }
 
     public static void hideMenu() { root.setLeft(null); }
 }
