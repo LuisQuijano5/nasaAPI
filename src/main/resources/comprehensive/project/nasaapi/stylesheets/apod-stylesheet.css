@@ -7,11 +7,7 @@
     -fx-text-fill: -txtColor0;
 }
 
-#imageDescription * {
-    -fx-text-fill: -txtColor0;
-}
-
-.lightTheme #imageDescription {
+#centerContainer *{
     -fx-text-fill: -txtColor0;
 }
 

@@ -2,6 +2,7 @@ package comprehensive.project.nasaapi.apiconnection;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import comprehensive.project.nasaapi.models.APOD;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -41,12 +42,12 @@ public class APIConnectionAPOD {
         }
     }
 
-    public static JsonObject getApod() throws IOException{
+    public static APOD getApod() throws IOException{
         String jsonData = getApiData();
 
-        JsonObject jsonObject = new Gson().fromJson(jsonData, JsonObject.class);
+        APOD apodObject = new Gson().fromJson(jsonData, APOD.class);
 
-        return jsonObject;
+        return apodObject;
     }
 
     public static String getApiKey() {

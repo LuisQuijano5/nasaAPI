@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.awt.*;
@@ -18,9 +19,7 @@ public class ThemeHandler implements IthemeHandler{
             child.getStyleClass().add("lightTheme");
             if (child instanceof FontIcon) {
                 ((FontIcon) child).setIconColor(Paint.valueOf("black"));
-            }
-            // Recursively call the function on child nodes that are containers
-            else if (child instanceof Parent) {
+            } else if (child instanceof Parent) {
                 applyLightTheme((Parent) child);
             }
         }

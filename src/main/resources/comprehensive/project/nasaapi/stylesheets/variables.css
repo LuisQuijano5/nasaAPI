@@ -5,6 +5,7 @@
     -bgColor3: #666777;
 
     -txtColor0: #FFFFFF;
+    -txtColor1: #000;
 }
 
 .lightTheme {
@@ -14,5 +15,6 @@
     -bgColor3: #999AAA;
 
     -txtColor0: #000000;
+    -txtColor1: #FFF;
 }
 

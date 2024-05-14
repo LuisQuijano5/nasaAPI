@@ -2,6 +2,8 @@ package comprehensive.project.nasaapi.controllers;
 
 import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.apiconnection.APIConnectionAPOD;
+import comprehensive.project.nasaapi.models.APOD;
+import comprehensive.project.nasaapi.models.ivl.Ivl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -88,19 +90,20 @@ public class ApodController {
             imageDescription.setText("");
             errorText.setText("");
 
-            JsonObject apodData = APIConnectionAPOD.getApod();
+            APOD apodData = APIConnectionAPOD.getApod();
+            //JsonObject apodData = APIConnectionAPOD.getApod();
 
-            String date = apodData.get("date").getAsString();
+            String date = apodData.getDate().toString();
             dateText.setText("Date: " + date);
 
-            String title = apodData.get("title").getAsString();
+            String title = apodData.getTitle();
             titleText.setText(title);
 
-            String imageUrl = apodData.get("url").getAsString();
+            String imageUrl = apodData.getUrl();
             Image image = new Image(imageUrl);
             imageView.setImage(image);
 
-            String description = apodData.get("explanation").getAsString();
+            String description = apodData.getExplanation();
             imageDescription.setWrappingWidth(600);
             imageDescription.setText(description);
         }catch (Exception e){

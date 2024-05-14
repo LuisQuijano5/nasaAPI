@@ -4,6 +4,10 @@
 <?import javafx.scene.layout.*?>
 
 <?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.web.WebView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="container"
@@ -24,9 +28,35 @@
     </top>
 
     <center>
-        <VBox fx:id="centerContainer">
+       <VBox fx:id="centerContainer">
+           <padding>
+               <Insets top="10" right="10" bottom="10" left="10"/>
+           </padding>
+           <HBox>
+               <padding>
+                   <Insets top="10" right="10" bottom="10" left="10"/>
+               </padding>
+               <TextField fx:id="queryField" promptText="Ingresa tu consulta" />
+               <ComboBox fx:id="mediaTypeComboBox" promptText="Selecciona el tipo de medio">
+                   <items>
+                       <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="video" />
+                           <String fx:value="image" />
+                           <String fx:value="audio" />
+                       </FXCollections>
+                   </items>
+               </ComboBox>
+               <Button fx:id="showBtnIvl" text="show" onAction="#onPerformSearchButtonClick"/>
 
-        </VBox>
+           </HBox>
+           <ScrollPane fx:id="scrollPaneContainer" fitToWidth="true" fitToHeight="true">
+               <TilePane fx:id="tilePane" prefHeight="400.0" prefWidth="600.0" >
+                   <WebView maxWidth="400" maxHeight="250">
+
+                   </WebView>
+               </TilePane>
+           </ScrollPane>
+       </VBox>
     </center>
 
 </BorderPane>

@@ -7,7 +7,13 @@ module comprehensive.project.nasaapi {
     requires org.kordamp.bootstrapfx.core;
     requires java.desktop;
 
+    requires javafx.web;
+    requires javafx.base;
+    requires javafx.graphics;
+
     requires com.google.gson;
+
+    opens comprehensive.project.nasaapi.models.ivl;
 
     opens comprehensive.project.nasaapi to javafx.fxml;
     exports comprehensive.project.nasaapi;
