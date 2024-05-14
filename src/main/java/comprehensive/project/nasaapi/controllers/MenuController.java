@@ -17,7 +17,12 @@ public class MenuController {
     VBox container;
 
     public void initialize(){
-        if(!App.darkTheme){ changeTheme(); }
+        if(!App.darkTheme){
+            changeTheme();
+        }
+        else if(App.menuConfig == 1){
+            changeTheme();
+        }
     }
 
     @FXML

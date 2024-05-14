@@ -1,5 +1,14 @@
 package comprehensive.project.nasaapi.models;
 
+import comprehensive.project.nasaapi.App;
+import comprehensive.project.nasaapi.database.DAO.AuxDao;
+import comprehensive.project.nasaapi.database.DAO.PreferenceDao;
+import comprehensive.project.nasaapi.database.DAO.PrivilegeDao;
+import comprehensive.project.nasaapi.database.DAO.ViewDao;
+import javafx.scene.control.Alert;
+
+import java.io.IOException;
+
 public class User
 {
     private int id;
@@ -12,6 +21,40 @@ public class User
     private int epicAccess, epicPrivilege;
     private int accountAccess, accountPrivilege;
     private int colorModePref, menuVisibilityPref;
+
+    public void setPreferences(PreferenceDao dao) throws IOException {
+        AuxDao auxDao = dao.getPreferenceByUserId(this.id);
+        if(!auxDao.isSuccess()){
+            App.showMessage.alert(Alert.AlertType.ERROR, "ERROR", auxDao.getMessage(), "Please try again");
+            return;
+        }
+        this.colorModePref = auxDao.getValues()[0];
+        this.menuVisibilityPref = auxDao.getValues()[1];
+    }
+
+    public void setAccess(ViewDao dao) throws IOException{
+        AuxDao auxDao = dao.getViewsByUserId(this.id);
+        if(!auxDao.isSuccess()){
+            App.showMessage.alert(Alert.AlertType.ERROR, "ERROR", auxDao.getMessage(), "Please try again");
+            return;
+        }
+        this.apodAccess = auxDao.getValues()[0];
+        this.galleryAccess = auxDao.getValues()[1];
+        this.epicAccess = auxDao.getValues()[2];
+        this.accountAccess = auxDao.getValues()[3];
+    }
+
+    public void setPrivileges(PrivilegeDao dao) throws IOException{
+        AuxDao auxDao = dao.getPrivilegeByUserId(this.id);
+        if(!auxDao.isSuccess()){
+            App.showMessage.alert(Alert.AlertType.ERROR, "ERROR", auxDao.getMessage(), "Please try again");
+            return;
+        }
+        this.apodPrivilege = auxDao.getValues()[0];
+        this.galleryPrivilege = auxDao.getValues()[1];
+        this.epicPrivilege = auxDao.getValues()[2];
+        this.accountPrivilege = auxDao.getValues()[3];
+    }
 
     public User() {
     }
@@ -40,8 +83,6 @@ public class User
     }
 
     //for guests
-
-
     public User(int id, String name, boolean isAdmin, int apodAccess, int apodPrivilege, int galleryAccess, int galleryPrivilege, int epicAccess, int epicPrivilege, int accountAccess, int accountPrivilege, int colorModePref, int menuVisibilityPref) {
         this.id = id;
         this.name = name;

@@ -22,6 +22,9 @@ public class AccountController {
         if(!App.darkTheme){
             App.themeHandler.applyLightTheme(container);
         }
+        if(App.currentUser.getMenuVisibilityPref() == 0){
+            menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
+        }
         loadToggleButtons();
     }
 

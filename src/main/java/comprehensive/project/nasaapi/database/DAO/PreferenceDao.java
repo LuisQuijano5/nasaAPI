@@ -25,8 +25,8 @@ public class PreferenceDao
 
         Response responseObj = gson.fromJson(response, Response.class);
         if(responseObj.success){
-            ViewResponse responseByView = gson.fromJson(responseObj.data.toString(), ViewResponse.class);
-            return new AuxDao(true, new int[]{responseByView.apod, responseByView.gallery, responseByView.epic, responseByView.account});
+            PreferenceResponse responseByView = gson.fromJson(responseObj.data.toString(), PreferenceResponse.class);
+            return new AuxDao(true, new int[]{responseByView.darkMode, responseByView.menuVisibility});
         } else {
             return new AuxDao(false, responseObj.message);
         }

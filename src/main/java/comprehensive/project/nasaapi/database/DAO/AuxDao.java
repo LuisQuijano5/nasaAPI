@@ -95,6 +95,10 @@ public class AuxDao {
     }
 
     public int[] getValues() {
+        StringBuilder string = new StringBuilder();
+        for(int value : values){
+            string.append(value);
+        }
         return values;
     }
 

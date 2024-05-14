@@ -16,6 +16,9 @@ public class GalleryController {
 
     public void initialize(){
         if(!App.darkTheme){ App.themeHandler.applyLightTheme(container); }
+        if(App.currentUser.getMenuVisibilityPref() == 0){
+            menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
+        }
     }
 
     @FXML

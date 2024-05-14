@@ -3,6 +3,7 @@ package comprehensive.project.nasaapi.controllers;
 import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.database.DAO.*;
 import comprehensive.project.nasaapi.models.User;
+import comprehensive.project.nasaapi.services.PermitsSetter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -73,64 +74,27 @@ public class LogInController {
         //enableFields();
     }
 
-    private boolean setPermits(int id) throws IOException {
-        AuxDao auxDao = viewDao.getViewsByUserId(id);
-        if(!auxDao.isSuccess()){
-            App.showMessage.alert(Alert.AlertType.ERROR,"ERROR", auxDao.getMessage(), "Setting defaul permits");
+    private boolean setPermits()  {
+        try {
+            App.currentUser.setPreferences(preferenceDao);
+            App.currentUser.setPrivileges(privilegeDao);
+            App.currentUser.setAccess(viewDao);
+        } catch(IOException e) {
             return false;
         }
-        int[] viewsValues = auxDao.getValues();
-        App.currentUser.setApodAccess(viewsValues[0]);
-        App.currentUser.setGalleryAccess(viewsValues[1]);
-        App.currentUser.setEpicAccess(viewsValues[2]);
-        App.currentUser.setAccountAccess(viewsValues[3]);
-
-        auxDao = privilegeDao.getPrivilegeByUserId(id);
-        if(!auxDao.isSuccess()){
-            App.showMessage.alert(Alert.AlertType.ERROR,"ERROR", auxDao.getMessage(), "Setting defaul permits");
-            return false;
-        }
-        viewsValues = auxDao.getValues();
-        App.currentUser.setApodPrivilege(viewsValues[0]);
-        App.currentUser.setGalleryPrivilege(viewsValues[1]);
-        App.currentUser.setEpicPrivilege(viewsValues[2]);
-        App.currentUser.setAccountPrivilege(viewsValues[3]);
-
-        auxDao = preferenceDao.getPreferenceByUserId(id);
-        if(!auxDao.isSuccess()){
-            App.showMessage.alert(Alert.AlertType.ERROR,"ERROR", auxDao.getMessage(), "Setting defaul preferences");
-            return false;
-        }
-        viewsValues = auxDao.getValues();
-        App.currentUser.setColorModePref(viewsValues[0]);
-        App.currentUser.setMenuVisibilityPref(viewsValues[1]);
-
         return true;
     }
 
     private void logIn(AuxDao auxDao, String name) throws IOException {
         App.currentUser = new User(auxDao.getId(), name, auxDao.isCondition(), auxDao.getData());
-        if(!setPermits(App.currentUser.getId())){
-            defaultPermits(1);
+        if(!setPermits()){
+            PermitsSetter.setDefault(1);
         }
 
         App.showMenu();
         App.changeView("apod");
     }
 
-    private void defaultPermits(int num){
-        App.currentUser.setAccountAccess(num);
-        App.currentUser.setApodAccess(num);
-        App.currentUser.setEpicAccess(num);
-        App.currentUser.setGalleryAccess(num);
-        App.currentUser.setAccountPrivilege(num);
-        App.currentUser.setApodPrivilege(num);
-        App.currentUser.setEpicPrivilege(num);
-        App.currentUser.setGalleryPrivilege(num);
-        App.currentUser.setColorModePref(num);
-        App.currentUser.setMenuVisibilityPref(num);
-
-    }
     private void disableFields(){
         passwordField.setDisable(true);
         visiblePasswordField.setDisable(true);

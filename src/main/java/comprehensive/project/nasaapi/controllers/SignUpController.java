@@ -3,6 +3,7 @@ package comprehensive.project.nasaapi.controllers;
 import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.database.DAO.*;
 import comprehensive.project.nasaapi.models.User;
+import comprehensive.project.nasaapi.services.PermitsSetter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -131,7 +132,7 @@ public class SignUpController {
         return true;
     }
 
-    private boolean setPermits(int userId) throws IOException {
+    private boolean setAccessNPrivilege(int userId) throws IOException {
         String[] viewNames = {"apod", "gallery", "epic", "account"};
         AuxDao auxDao;
         for(String viewName : viewNames){
@@ -163,15 +164,30 @@ public class SignUpController {
     }
 
     private boolean setUserConfig(int userId) throws IOException {
-        return setPermits(userId) && setPreferences(userId);
+        return setAccessNPrivilege(userId) && setPreferences(userId);
     }
 
-    private void signUp(String name, boolean isAdmin, AuxDao auxDao) {
+    private boolean setPermits() {
+        try {
+            App.currentUser.setPreferences(preferenceDao);
+            App.currentUser.setPrivileges(privilegeDao);
+            App.currentUser.setAccess(viewDao);
+        } catch(IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    private void signUp(String name, boolean isAdmin, AuxDao auxDao) throws IOException {
         App.currentUser = new User(auxDao.getId(), name, isAdmin, auxDao.getData(), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        if(!setPermits()){
+            PermitsSetter.setDefault(1);
+        }
 
         App.showMenu();
         App.changeView("apod");
     }
+
 
     private void disableFields(){
         passwordField.setDisable(true);

@@ -16,3 +16,13 @@
     -txtColor0: #000000;
 }
 
+.lightTheme *{
+    -bgColor0: #FFFFFF;
+    -bgColor1: #DDDEEE;
+    -bgColor2: #BBBCCC;
+    -bgColor3: #999AAA;
+
+    -txtColor0: #000000;
+}
+
+
