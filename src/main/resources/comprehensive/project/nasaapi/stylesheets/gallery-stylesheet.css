@@ -32,8 +32,4 @@
 
 .web-view {
     -fx-background-color: -bgColor1;
-    -fx-min-width: 0;
-    -fx-max-width: 100%;
-    -fx-min-height: 0;
-    -fx-max-height: 100%;
 }

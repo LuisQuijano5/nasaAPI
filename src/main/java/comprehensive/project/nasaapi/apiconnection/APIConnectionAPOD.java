@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class APIConnectionAPOD {
 
     private static String customDate = "";
-    private static String API_KEY = "DOrdIrK4IrT10Nce6AeUQjvWafJlmCa87cOWxnyB";//DEMO_KEY
+    private static String API_KEY = "DOrdIrK4IrT10Nce6AeUQjvWafJlmCa87cOWxnyB";//DEMO_KEY DOrdIrK4IrT10Nce6AeUQjvWafJlmCa87cOWxnyB
     private static String API_URL;
 
     private static String getApiData() throws IOException{

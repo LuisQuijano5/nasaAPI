@@ -55,9 +55,9 @@ public class ApodController {
     VBox centerContainer;
 
     public void initialize(){
-        if(!App.darkTheme){
+        /*if(!App.darkTheme){
             App.themeHandler.applyLightTheme(container);
-        }
+        }*/
         if(App.currentUser.getMenuVisibilityPref() == 0){
             menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
         }
@@ -117,6 +117,7 @@ public class ApodController {
             imageDescription.setText(description);
         }catch (Exception e){
             errorText.setText(e.toString());
+            System.out.println(e);
         }
     }
 

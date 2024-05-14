@@ -13,6 +13,7 @@ module comprehensive.project.nasaapi {
 
     requires com.google.gson;
 
+    opens comprehensive.project.nasaapi.models;
     opens comprehensive.project.nasaapi.models.ivl;
 
     opens comprehensive.project.nasaapi to javafx.fxml;
