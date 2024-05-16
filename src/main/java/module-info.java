@@ -10,6 +10,7 @@ module comprehensive.project.nasaapi {
     requires javafx.web;
     requires javafx.base;
     requires javafx.graphics;
+    requires javafx.media;
 
     requires com.google.gson;
     requires okhttp3;

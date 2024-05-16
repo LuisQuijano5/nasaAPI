@@ -4,6 +4,7 @@ import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.apiconnection.APIConnectionAPOD;
 import comprehensive.project.nasaapi.models.APOD;
 import comprehensive.project.nasaapi.models.ivl.Ivl;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.converter.LocalDateStringConverter;
 
+import javax.swing.text.PlainDocument;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -91,34 +93,41 @@ public class ApodController {
     }
 
     private void updateInfo(){
-        try {
-            // Limpiar
-            dateText.setText("");
-            titleText.setText("");
-            imageView.setImage(null);
-            imageDescription.setText("");
-            errorText.setText("");
+        Thread infoThread = new Thread(() -> {
+            try {
 
-            APOD apodData = APIConnectionAPOD.getApod();
-            //JsonObject apodData = APIConnectionAPOD.getApod();
+                APOD apodData = APIConnectionAPOD.getApod();
+                //JsonObject apodData = APIConnectionAPOD.getApod();
+                Platform.runLater(() -> {
+                    // Limpiar
+                    dateText.setText("");
+                    titleText.setText("");
+                    imageView.setImage(null);
+                    imageDescription.setText("");
+                    errorText.setText("");
 
-            String date = apodData.getDate().toString();
-            dateText.setText("Date: " + date);
+                    String date = apodData.getDate().toString();
+                    dateText.setText("Date: " + date);
 
-            String title = apodData.getTitle();
-            titleText.setText(title);
+                    String title = apodData.getTitle();
+                    titleText.setText(title);
 
-            String imageUrl = apodData.getUrl();
-            Image image = new Image(imageUrl);
-            imageView.setImage(image);
+                    String imageUrl = apodData.getUrl();
+                    Image image = new Image(imageUrl);
+                    imageView.setImage(image);
 
-            String description = apodData.getExplanation();
-            imageDescription.setWrappingWidth(600);
-            imageDescription.setText(description);
-        }catch (Exception e){
-            errorText.setText(e.toString());
-            System.out.println(e);
-        }
+                    String description = apodData.getExplanation();
+                    imageDescription.setWrappingWidth(600);
+                    imageDescription.setText(description);
+                });
+
+            }catch (Exception e){
+                errorText.setText(e.toString());
+                System.out.println(e);
+            }
+        });
+        infoThread.start();
+
     }
 
     private void updateQuery(LocalDate newDate) {

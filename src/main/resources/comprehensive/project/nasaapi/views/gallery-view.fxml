@@ -28,7 +28,7 @@
     </top>
 
     <center>
-       <VBox fx:id="centerContainer">
+       <VBox fx:id="centerContainer" maxHeight="-Infinity">
            <padding>
                <Insets top="10" right="10" bottom="10" left="10"/>
            </padding>
@@ -37,6 +37,11 @@
                    <Insets top="10" right="10" bottom="10" left="10"/>
                </padding>
                <TextField fx:id="queryField" promptText="Ingresa tu consulta" />
+               <Button fx:id="showBtnIvl" text="Search" onAction="#onPerformSearchButtonClick">
+                   <graphic>
+                       <FontIcon iconLiteral="fas-search" iconColor="white" iconSize="20"/>
+                   </graphic>
+               </Button>
                <ComboBox fx:id="mediaTypeComboBox" promptText="Selecciona el tipo de medio">
                    <items>
                        <FXCollections fx:factory="observableArrayList">
@@ -46,14 +51,10 @@
                        </FXCollections>
                    </items>
                </ComboBox>
-               <Button fx:id="showBtnIvl" text="show" onAction="#onPerformSearchButtonClick"/>
 
            </HBox>
            <ScrollPane fx:id="scrollPaneContainer" fitToWidth="true" fitToHeight="true">
                <TilePane fx:id="tilePane" prefHeight="400.0" prefWidth="600.0" >
-                   <WebView maxWidth="400" maxHeight="250">
-
-                   </WebView>
                </TilePane>
            </ScrollPane>
        </VBox>
