@@ -1,5 +1,6 @@
 package comprehensive.project.nasaapi.services;
 
+import javafx.scene.Parent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -7,7 +8,7 @@ import javafx.scene.layout.HBox;
 public class PasswordSwitch implements IpasswordSwitch{
     @Override
     public boolean toogleVisibility(PasswordField passwordField, TextField textField,
-                                 HBox passwordContainer, HBox textContainer, boolean isVisible)
+                                    Parent passwordContainer, Parent textContainer, boolean isVisible)
     {
         if(isVisible) {
             passwordContainer.setVisible(true);

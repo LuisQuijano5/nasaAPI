@@ -64,10 +64,11 @@ public class LogInController {
         //disableFields();
         //to avoid issues if the textfields are suddenly changed
         String name = usernameField.getText();
+        String password = passwordField.getText();
 
-        AuxDao auxDao = userDao.logIn(name, passwordField.getText() );
+        AuxDao auxDao = userDao.logIn(name, password );
         if(auxDao.isSuccess()){
-            logIn(auxDao, name);
+            logIn(auxDao, name, password);
         }else{
             App.showMessage.alert(Alert.AlertType.ERROR, "ERROR", auxDao.getMessage(), "PLEASE CHECK THE USERNAME AND PASSWORD");
         }
@@ -85,8 +86,9 @@ public class LogInController {
         return true;
     }
 
-    private void logIn(AuxDao auxDao, String name) throws IOException {
+    private void logIn(AuxDao auxDao, String name, String pass) throws IOException {
         App.currentUser = new User(auxDao.getId(), name, auxDao.isCondition(), auxDao.getData());
+        App.currentUser.setPassword(pass);
         if(!setPermits()){
             PermitsSetter.setDefault(1);
         }

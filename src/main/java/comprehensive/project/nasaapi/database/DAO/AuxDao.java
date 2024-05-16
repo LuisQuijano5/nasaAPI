@@ -1,5 +1,9 @@
 package comprehensive.project.nasaapi.database.DAO;
 
+import comprehensive.project.nasaapi.models.*;
+
+import java.util.List;
+
 public class AuxDao {
     private boolean success;
     private String message;
@@ -7,8 +11,22 @@ public class AuxDao {
     private boolean condition;
     private int id;
     private int[] values;
+    private List<User> users;
+    private List<Modification> mods;
+    private List<Favorites> favs;
+    private List<PicODay> pics;
+    private Resource resource;
 
     public AuxDao() {
+    }
+
+    public AuxDao(boolean success) {
+        this.success = success;
+    }
+
+    public AuxDao(boolean success, Resource resource) {
+        this.success = success;
+        this.resource = resource;
     }
 
     public AuxDao(boolean success, String message) {
@@ -104,5 +122,45 @@ public class AuxDao {
 
     public void setValues(int[] values) {
         this.values = values;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<Modification> getMods() {
+        return mods;
+    }
+
+    public void setMods(List<Modification> mods) {
+        this.mods = mods;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
+    public List<Favorites> getFavs() {
+        return favs;
+    }
+
+    public void setFavs(List<Favorites> favs) {
+        this.favs = favs;
+    }
+
+    public List<PicODay> getPics() {
+        return pics;
+    }
+
+    public void setPics(List<PicODay> pics) {
+        this.pics = pics;
     }
 }

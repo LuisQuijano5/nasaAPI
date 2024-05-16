@@ -99,11 +99,11 @@ public class SignUpController {
         AuxDao auxDao = userDao.register(name, password, isAdmin);
         if(auxDao.isSuccess()){
             if(isAdmin){
-                if(setPreferences(auxDao.getId())){ return; }
+                if(!setPreferences(auxDao.getId())){ return; }
             } else if(!setUserConfig(auxDao.getId())){ return; }
             auxDao = userDao.logIn(name, password);//login
             if(auxDao.isSuccess()){
-                signUp(name, isAdmin, auxDao);
+                signUp(name, isAdmin, auxDao, password);
             }else{
                 App.showMessage.alert(Alert.AlertType.ERROR, "ERROR", auxDao.getMessage(), "PLEASE CHECK THE USERNAME AND PASSWORD");
             }
@@ -178,11 +178,16 @@ public class SignUpController {
         return true;
     }
 
-    private void signUp(String name, boolean isAdmin, AuxDao auxDao) throws IOException {
-        App.currentUser = new User(auxDao.getId(), name, isAdmin, auxDao.getData(), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-        if(!setPermits()){
-            PermitsSetter.setDefault(1);
+    private void signUp(String name, boolean isAdmin, AuxDao auxDao, String pass) throws IOException {
+        if(isAdmin){
+            App.currentUser = new User(auxDao.getId(), name, true, auxDao.getData(), 1, 1);
+        } else{
+            App.currentUser = new User(auxDao.getId(), name, false, auxDao.getData(), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+            if(!setPermits()){
+                PermitsSetter.setDefault(1);
+            }
         }
+        App.currentUser.setPassword(pass);
 
         App.showMenu();
         App.changeView("apod");

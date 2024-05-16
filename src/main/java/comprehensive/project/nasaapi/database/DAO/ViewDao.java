@@ -1,6 +1,7 @@
 package comprehensive.project.nasaapi.database.DAO;
 
 import comprehensive.project.nasaapi.database.Connection;
+import comprehensive.project.nasaapi.models.User;
 import comprehensive.project.nasaapi.models.View;
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +16,7 @@ public class ViewDao{
                 {"userId": %d,
                 "name": "%s",
                 "value": %d}""", userId, name, value);
-        String response = Connection.sendRequest(baseUrl, "POST", body);
+        String response = Connection.sendRequest(baseUrl, "POST", body, null);
 
         Response responseObj = gson.fromJson(response, Response.class);
         return new AuxDao(responseObj.success, responseObj.message);
@@ -23,7 +24,7 @@ public class ViewDao{
 
     public AuxDao getViewsByUserId(int userId) throws IOException {
         String newBaseUrl =  "view?userId=" + userId;
-        String response = Connection.sendGETRequest(newBaseUrl);
+        String response = Connection.sendGETRequest(newBaseUrl, null);
 
         Response responseObj = gson.fromJson(response, Response.class);
         if(responseObj.success){
@@ -34,4 +35,18 @@ public class ViewDao{
         }
     }
 
+    public AuxDao updatePreference(User user, int userId, int value, String name) {
+        String body = String.format("""
+                {"userId": %d,
+                "name": "%s",
+                "value": %d}""", userId, name, value);
+        String response = Connection.sendPatch(baseUrl, body, user.getToken());
+
+        Response responseObj = gson.fromJson(response, Response.class);
+        if(responseObj == null){
+            return new AuxDao(false, "Error updating preference");
+        } else {
+            return new AuxDao(responseObj.success, responseObj.message);
+        }
+    }
 }

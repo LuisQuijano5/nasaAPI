@@ -9,10 +9,6 @@
     -fx-padding: 1em;
 }
 
-.centerContainer{
-    -fx-alignment: CENTER;
-}
-
 .btnBox{
     -fx-spacing: 1em;
 }
@@ -26,22 +22,10 @@
     -fx-max-width: 16em;
 }
 
-#visiblePasswordContainer, #passwordContainer, #confirmPasswordContainer, #confirmVisiblePasswordContainer {
-    -fx-spacing: 0.6em;
-}
-
 #fieldContainer{
     -fx-spacing: 1em;
     -fx-pref-width: 20em;
     -fx-padding: 0 0 0.6em 0;
 }
 
-.iconContainer{
-    -fx-pref-width: 2em;
-}
-
-.iconContainer:hover {
-    -fx-background-color: -bgColor2;
-    -fx-cursor: hand;
-}
 

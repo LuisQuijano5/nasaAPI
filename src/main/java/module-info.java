@@ -12,6 +12,7 @@ module comprehensive.project.nasaapi {
     requires javafx.graphics;
 
     requires com.google.gson;
+    requires okhttp3;
 
     opens comprehensive.project.nasaapi.models;
     opens comprehensive.project.nasaapi.models.ivl;

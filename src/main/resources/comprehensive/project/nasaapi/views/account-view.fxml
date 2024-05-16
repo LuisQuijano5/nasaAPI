@@ -24,16 +24,72 @@
 
             <Pane style="-fx-pref-width: 6em"/>
 
-            <VBox fx:id="toggleBtnsContainer">
-
-            </VBox>
+            <HBox fx:id="toggleBtnsContainer">
+                <Button fx:id="myAccountBtn" text="My Profile" onAction="#setMyAccountSection" visible="false"/>
+                <Button fx:id="modificationsBtn" text="Modifications" onAction="#setModificationsSection" visible="false"/>
+                <Button fx:id="usersBtn" text="Users" onAction="#setUsersSection" visible="false"/>
+            </HBox>
         </HBox>
     </top>
 
     <center>
-        <VBox fx:id="centerContainer">
+        <StackPane fx:id="centerContainer">
+            <!--GUESTS SECTION-->
+            <VBox fx:id="guestsSection">
+                <Label>Go back and log in or sign up</Label>
+            </VBox>
 
-        </VBox>
+            <!--MY ACCOUNT SECTION-->
+            <VBox styleClass="section" fx:id="myAccountSection" visible="false">
+
+                <HBox styleClass="centerContainer">
+                    <Label styleClass="sectionTitle">MY ACCOUNT</Label>
+                </HBox>
+                <HBox styleClass="centerContainer">
+                    <VBox style="-fx-spacing: 0.4em">
+                        <Label>Username</Label>
+                        <TextField fx:id="usernameField" styleClass="blackText"/>
+                    </VBox>
+                </HBox>
+                <HBox styleClass="centerContainer">
+                    <VBox style="-fx-spacing: 0.4em">
+                        <Label text="Password:" />
+                        <StackPane>
+                            <VBox fx:id="passwordContainer">
+                                <PasswordField styleClass="blackText" fx:id="passwordField"/>
+                                <VBox styleClass="iconContainer, centerContainer" onMouseClicked="#changePasswordVisibility">
+                                    <FontIcon fx:id="closedEyePass" iconLiteral="far-eye-slash" iconSize="24" iconColor="white"/>
+                                </VBox>
+                            </VBox>
+                            <VBox fx:id="visiblePasswordContainer" visible="false">
+                                <TextField styleClass="blackText" fx:id="visiblePasswordField"/>
+                                <VBox styleClass="iconContainer, centerContainer" onMouseClicked="#changePasswordVisibility">
+                                    <FontIcon fx:id="openEyePass" iconLiteral="far-eye" iconSize="24" iconColor="white"/>
+                                </VBox>
+                            </VBox>
+                        </StackPane>
+                    </VBox>
+                </HBox>
+
+                <Button text="Update" onAction="#updateUserInfo"/>
+
+            </VBox>
+
+            <!--Modifications SECTION-->
+            <VBox fx:id="modificationsSection" visible="false">
+                <Label>modifications</Label>
+                <Button text="see mods" onAction="#showModifications"/>
+            </VBox>
+
+            <!--users SECTION-->
+            <VBox fx:id="usersSection" visible="false">
+                <Label>users</Label>
+                <Button text="Show" onAction="#showUsers"/>
+                <Button text="Delete" onAction="#deleteUser"/>
+                <Button text="Update preference" onAction="#updatePref"/>
+            </VBox>
+
+        </StackPane>
     </center>
 
 </BorderPane>

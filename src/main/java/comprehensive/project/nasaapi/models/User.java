@@ -21,6 +21,7 @@ public class User
     private int epicAccess, epicPrivilege;
     private int accountAccess, accountPrivilege;
     private int colorModePref, menuVisibilityPref;
+    private String password;
 
     public void setPreferences(PreferenceDao dao) throws IOException {
         AuxDao auxDao = dao.getPreferenceByUserId(this.id);
@@ -58,6 +59,16 @@ public class User
 
     public User() {
     }
+
+    public User(int id, String name, boolean isAdmin, String token, int colorModePref, int menuVisibilityPref) {
+        this.id = id;
+        this.name = name;
+        this.isAdmin = isAdmin;
+        this.token = token;
+        this.colorModePref = colorModePref;
+        this.menuVisibilityPref = menuVisibilityPref;
+    }
+
     public User(int id, String name, boolean isAdmin, String token) {
         this.id = id;
         this.name = name;
@@ -217,5 +228,13 @@ public class User
 
     public void setMenuVisibilityPref(int menuVisibilityPref) {
         this.menuVisibilityPref = menuVisibilityPref;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
