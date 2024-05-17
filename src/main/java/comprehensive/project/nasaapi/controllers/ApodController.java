@@ -93,12 +93,12 @@ public class ApodController {
     }
 
     private void updateInfo(){
-        Thread infoThread = new Thread(() -> {
+
             try {
 
                 APOD apodData = APIConnectionAPOD.getApod();
                 //JsonObject apodData = APIConnectionAPOD.getApod();
-                Platform.runLater(() -> {
+
                     // Limpiar
                     dateText.setText("");
                     titleText.setText("");
@@ -106,27 +106,27 @@ public class ApodController {
                     imageDescription.setText("");
                     errorText.setText("");
 
-                    String date = apodData.getDate().toString();
-                    dateText.setText("Date: " + date);
+                    Platform.runLater(() -> {
+                        String date = apodData.getDate().toString();
+                        dateText.setText("Date: " + date);
 
-                    String title = apodData.getTitle();
-                    titleText.setText(title);
+                        String title = apodData.getTitle();
+                        titleText.setText(title);
 
-                    String imageUrl = apodData.getUrl();
-                    Image image = new Image(imageUrl);
-                    imageView.setImage(image);
+                        String imageUrl = apodData.getUrl();
+                        Image image = new Image(imageUrl);
+                        imageView.setImage(image);
 
-                    String description = apodData.getExplanation();
-                    imageDescription.setWrappingWidth(600);
-                    imageDescription.setText(description);
-                });
+                        String description = apodData.getExplanation();
+                        imageDescription.setWrappingWidth(600);
+                        imageDescription.setText(description);
+                    });
+
 
             }catch (Exception e){
                 errorText.setText(e.toString());
                 System.out.println(e);
             }
-        });
-        infoThread.start();
 
     }
 

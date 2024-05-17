@@ -8,6 +8,8 @@
 <?import javafx.scene.web.WebView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="container"
@@ -55,6 +57,9 @@
            </HBox>
            <ScrollPane fx:id="scrollPaneContainer" fitToWidth="true" fitToHeight="true">
                <TilePane fx:id="tilePane" prefHeight="400.0" prefWidth="600.0" >
+                   <ImageView fitHeight="200" fitWidth="200" preserveRatio="true" visible="false" >
+                       <Image fx:id="imageAudio" url="@../images/audio.jpg"/>
+                   </ImageView>
                </TilePane>
            </ScrollPane>
        </VBox>

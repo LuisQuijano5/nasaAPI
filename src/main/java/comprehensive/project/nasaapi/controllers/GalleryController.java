@@ -10,16 +10,20 @@ import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
@@ -28,6 +32,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
 
+//@../images/joke.jpg
 
 public class GalleryController {
     @FXML
@@ -44,6 +49,8 @@ public class GalleryController {
 
     @FXML
     private TilePane tilePane;
+    @FXML
+    private Image imageAudio;
 
     public void initialize(){
         if(!App.darkTheme){ App.themeHandler.applyLightTheme(container); }
@@ -64,7 +71,7 @@ public class GalleryController {
         //For each space in query add %20
         String query = queryField.getText().replace(" ", "%20");
 
-        Thread loadSearch = new Thread(() ->{
+        Thread loadSearch = new Thread(() -> {
             Platform.runLater(() -> {
                 try {
                     APIConnectionIVL.setSearch(query);//Actualiza la busqueda en la pantalla
@@ -74,7 +81,7 @@ public class GalleryController {
                     List<Item> items = collection.getItems();
 
 
-                    for (int i = 0; i < 30 && i < items.size(); i++) {
+                    for (int i = 0; i < 5 && i < items.size(); i++) {
                         Item item = items.get(i);
                         List<Datum> data = item.getData();
 
@@ -87,7 +94,7 @@ public class GalleryController {
 
                                 if (datum.getMediaType().equals("video")){
 
-                                    loadVideo(collection, i, item, tilePane);
+                                    loadVideo(links,collection, i, item, tilePane);
 
                                 } else if (datum.getMediaType().equals("audio")){
 
@@ -136,7 +143,7 @@ public class GalleryController {
             Gson gson = new Gson();
 
             String[] jsonArray = gson.fromJson(jsonData, String[].class);
-            System.out.println("Holaa: "+jsonArray[0]);
+
             return jsonArray;
         }
     }
@@ -144,18 +151,37 @@ public class GalleryController {
     //Load Image resources
     public static void loadImage(List<Link> links, Item item, TilePane tilePane){
         try {
+            String imageUrl = links.get(0).getHref();
+
+            String description = item.getData().get(0).getDescription();
+
+
+
             WebView webView = new WebView();
-            webView.getEngine().load(links.get(0).getHref());
-            webView.setMaxWidth(400);
-            webView.setMaxHeight(250);
+            webView.getEngine().load(imageUrl);
+            webView.setPrefSize(300, 221);
+
+            Label mediaLabel = new Label("Image");
+            mediaLabel.maxWidth(400);
 
             Label titleLabel = new Label(item.getData().get(0).getTitle());
             titleLabel.maxWidth(400);
 
             // Crear VBox para contener WebView y Label
             VBox resultBox = new VBox();
-            resultBox.getChildren().addAll(webView, titleLabel);
+            resultBox.getChildren().addAll(mediaLabel,webView, titleLabel);
             tilePane.getChildren().add(resultBox);
+
+            String finalUrl = imageUrl;
+            webView.setOnMouseClicked(event -> {
+                if (finalUrl != null){
+                    try {
+                        openVideoInNewWindow(finalUrl, description);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }catch (Exception e){
             Label titleLabel = new Label("It was impossible to load this resourse..."+
                     "\n\ne");
@@ -167,38 +193,48 @@ public class GalleryController {
     }
 
     //Load Audio resources
-    private static void loadAudio(Collectionn collection, int i,
+    private void loadAudio(Collectionn collection, int i,
                                 Item item, TilePane tilePane) throws IOException {
 
+        String audioUrl = null;
         try {
             String[] jsonLinks = linksExtractor(collection.getItems().get(i).getHref());
-            //System.out.println("Holaa: "+jsonLinks[0]);
 
-            WebView webView = new WebView();
+            ImageView test = new ImageView(imageAudio);
 
             for (String link : jsonLinks){
                 if (link.endsWith(".mp3")){
-                    webView.getEngine().load(link);
+                    //webView.getEngine().load(link);
 
-                    break;
-                } else if (link.endsWith(".jpg")) {
-                    webView.getEngine().load(link);
-
+                    audioUrl = link;
                     break;
                 }
             }
 
-            webView.setPrefSize(400, 250);
-            webView.setMaxSize(400, 50);
-            webView.setMinSize(400, 50);
+            String description = item.getData().get(0).getDescription();
+
+            Label mediaLabel = new Label("Audio");
+            mediaLabel.maxWidth(400);
 
             Label titleLabel = new Label(item.getData().get(0).getTitle());
             titleLabel.maxWidth(400);
 
             VBox resultBox = new VBox();
-            resultBox.getChildren().addAll(webView, titleLabel);
+            resultBox.getChildren().addAll(mediaLabel,test, titleLabel);
             tilePane.getChildren().add(resultBox);
+
+            String finalUrl = audioUrl;
+            test.setOnMouseClicked(event -> {
+                if (finalUrl != null){
+                    try {
+                        openVideoInNewWindow(finalUrl, description);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }catch (Exception e){
+            System.out.println(e);
             Label titleLabel = new Label("It was impossible to load this resourse..."+
                     "\n\ne");
 
@@ -209,33 +245,51 @@ public class GalleryController {
     }
 
     //Load Video Resources
-    private static void loadVideo(Collectionn collection, int i,
+    private static void loadVideo(List<Link> links,Collectionn collection, int i,
                                   Item item, TilePane tilePane) throws IOException {
         try {
+            String videoUrl = null;
+                    
             String[] jsonLinks = linksExtractor(collection.getItems().get(i).getHref());
 
             WebView webView = new WebView();
+            webView.getEngine().load(links.get(0).getHref());
 
             for (String link : jsonLinks){
                 if (link.endsWith(".mp4")){
-                    webView.getEngine().load(link);
+                    //webView.getEngine().load(link);
 
-                    //System.out.println(link);
+                    videoUrl = link;
                     break;
                 }
             }
 
+            String description = item.getData().get(0).getDescription();
 
-            webView.setPrefSize(400, 250);
-            webView.setMaxSize(400, 250);
-            webView.setMinSize(400, 250);
+            webView.setPrefSize(300, 221);
+
+            Label mediaLabel = new Label("Video");
+            mediaLabel.maxWidth(400);
 
             Label titleLabel = new Label(item.getData().get(0).getTitle());
             titleLabel.maxWidth(400);
 
             VBox resultBox = new VBox();
-            resultBox.getChildren().addAll(webView, titleLabel);
+            resultBox.getChildren().addAll(mediaLabel,webView, titleLabel);
             tilePane.getChildren().add(resultBox);
+
+            String finalUrl = videoUrl;
+            // Load video by clicking on the webView
+            webView.setOnMouseClicked(event -> {
+                if (finalUrl != null){
+                    try {
+                        openVideoInNewWindow(finalUrl, description);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
         }catch (Exception e){
             Label titleLabel = new Label("It was impossible to load this resourse..."+
                     "\n\n"+e);
@@ -245,5 +299,42 @@ public class GalleryController {
             tilePane.getChildren().add(resultBox);
         }
 
+    }
+
+    // Method to open a video in a new modal window
+    private static void openVideoInNewWindow(String videoUrl, String description) throws IOException {
+        Platform.runLater(() -> {
+            try {
+                Stage newWindow = new Stage();
+                newWindow.initModality(Modality.APPLICATION_MODAL);
+                newWindow.setTitle("Video Player");
+
+                WebView newWebView = new WebView();
+                newWebView.getEngine().load(videoUrl);
+                newWebView.setPrefSize(400, 400);
+
+                Text descriptionText = new Text();
+                descriptionText.setWrappingWidth(600);
+                descriptionText.setText(description);
+
+                VBox layout = new VBox(newWebView, descriptionText);
+                layout.setAlignment(Pos.CENTER);
+
+                ScrollPane scrollPane = new ScrollPane(layout);
+                scrollPane.fitToHeightProperty();
+                scrollPane.fitToWidthProperty();
+
+                Scene scene = new Scene(scrollPane, 800, 600);
+                newWindow.setScene(scene);
+                newWindow.show();
+
+                // Stop video when the window is closed
+                newWindow.setOnCloseRequest(event -> {
+                    newWebView.getEngine().load(null);
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
