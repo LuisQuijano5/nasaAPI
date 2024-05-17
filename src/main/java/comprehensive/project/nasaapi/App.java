@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -57,8 +58,11 @@ public class App extends Application {
         scene = new Scene(root);
         stage.setTitle("FinalProject");
         stage.setScene(scene);
-        stage.setMinWidth(250);
-        stage.setMinHeight(350);
+        //stage.setMinWidth(250);
+        //stage.setMinHeight(350);
+
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
 
         //media
         addMedia();

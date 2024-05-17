@@ -38,18 +38,19 @@
                <padding>
                    <Insets top="10" right="10" bottom="10" left="10"/>
                </padding>
-               <TextField fx:id="queryField" promptText="Ingresa tu consulta" />
+               <TextField fx:id="queryField" promptText="Enter your prompt" />
                <Button fx:id="showBtnIvl" text="Search" onAction="#onPerformSearchButtonClick">
                    <graphic>
                        <FontIcon iconLiteral="fas-search" iconColor="white" iconSize="20"/>
                    </graphic>
                </Button>
-               <ComboBox fx:id="mediaTypeComboBox" promptText="Selecciona el tipo de medio">
+               <ComboBox fx:id="mediaTypeComboBox" promptText="Select media type">
                    <items>
                        <FXCollections fx:factory="observableArrayList">
-                           <String fx:value="video" />
-                           <String fx:value="image" />
-                           <String fx:value="audio" />
+                           <String fx:value="All" />
+                           <String fx:value="Video" />
+                           <String fx:value="Image" />
+                           <String fx:value="Audio" />
                        </FXCollections>
                    </items>
                </ComboBox>

@@ -81,31 +81,28 @@ public class GalleryController {
                     Collectionn collection = ivl.getCollection();
                     List<Item> items = collection.getItems();
 
+                    String selectedMediaType = mediaTypeComboBox.getValue(); // Get selected filter
+                    if (selectedMediaType == null) {
+                        selectedMediaType = "All"; // Default to "All" if nothing selected
+                    }
 
-                    for (int i = 0; i < 5 && i < items.size(); i++) {
+                    for (int i = 0; i < 20 && i < items.size(); i++) {
                         Item item = items.get(i);
                         List<Datum> data = item.getData();
 
                         if (!data.isEmpty()) {
-                            Datum datum = data.get(0); // Asumiendo que solo hay un Datum por Item
-
+                            Datum datum = data.get(0);
                             List<Link> links = item.getLinks();
-                            if (true) { //Load MultiMedia resouces
-                                //Can be used as inspiration for the filter
 
-                                if (datum.getMediaType().equals("video")){
-
+                            // Apply the filter
+                            if (selectedMediaType.equals("All") || datum.getMediaType().equals(selectedMediaType.toLowerCase())) {
+                                if (datum.getMediaType().equals("video")) {
                                     loadVideo(links,collection, i, item, tilePane);
-
-                                } else if (datum.getMediaType().equals("audio")){
-
+                                } else if (datum.getMediaType().equals("audio")) {
                                     loadAudio(collection, i, item, tilePane);
-
                                 } else if (datum.getMediaType().equals("image")) {
-
                                     loadImage(links, item, tilePane);
                                 }
-
                             }
                         }
                     }

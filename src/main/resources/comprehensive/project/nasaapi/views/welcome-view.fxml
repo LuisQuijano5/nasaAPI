@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <!---->
+<?import javafx.scene.text.Text?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:id="container"
       stylesheets="@../stylesheets/welcome-stylesheet.css, @../stylesheets/general-stylesheet.css"
@@ -31,4 +32,7 @@
         </HBox>
         <Button fx:id="guestBtn" text="Continue as Guest" onAction="#continueAsGuest"/>
     </VBox>
+
+    <Text
+            text="Press Esc to exit full screen"/>
 </VBox>
