@@ -15,7 +15,7 @@ public class PicODayDao {
 
     public AuxDao addPic(User user, PicODay pic) throws IOException {
         String body = String.format("""
-                {"day": %s,
+                {"day": "%s",
                 "title": "%s",
                 "url": "%s",
                 "credits": "%s"}""", pic.getDay(), pic.getTitle(), pic.getUrl(), pic.getCredits());

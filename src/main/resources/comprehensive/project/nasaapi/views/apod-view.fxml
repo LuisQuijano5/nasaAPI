@@ -23,30 +23,66 @@
                 <Label styleClass="tag">Menu</Label>
             </VBox>
             <Label styleClass="title">APOD</Label>
+
+            <Pane style="-fx-pref-width: 6em"/>
+
+            <HBox fx:id="toggleBtnsContainer">
+                <Button fx:id="weekReportBtn" text="Last Week Report" onAction="#ongenerateReportButtonClick" visible="true">
+                    <graphic>
+                        <FontIcon iconLiteral="far-file-pdf" iconColor="white" iconSize="20"/>
+                    </graphic>
+                </Button>
+                <Button fx:id="apodBtn" text="APOD" onAction="#onLoadApodViewButtonClick" visible="false">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-space-shuttle" iconColor="white" iconSize="20"/>
+                    </graphic>
+                </Button>
+
+                <Button fx:id="apiKeyBtn" text="API KEY" onAction="#onModifyKeyButtonClick" visible="false">
+                    <graphic>
+                        <FontIcon fx:id="returnIcon" iconLiteral="fas-key" iconColor="white" iconSize="20"/>
+                    </graphic>
+                </Button>
+            </HBox>
         </HBox>
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true">
-            <content>
-                <VBox fx:id="centerContainer" alignment="CENTER">
-                    <HBox fx:id="datepickerContainer" alignment="CENTER">
-                        <children>
-                            <DatePicker fx:id="datePicker"/>
-                        </children>
-                        <padding>
-                            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-                        </padding>
-                        <Button fx:id="showBtn" text="show"/>
-                    </HBox>
-                    <Label fx:id="errorText"/>
-                    <Label fx:id="dateText"/>
-                    <Label fx:id="titleText"/>
-                    <ImageView fx:id="imageView" fitWidth="600" fitHeight="400" preserveRatio="true" />
-                    <Text fx:id="imageDescription" />
-                </VBox>
-            </content>
-        </ScrollPane>
+        <StackPane styleClass="centerContainer">
+            <!--Apod-->
+            <ScrollPane fitToWidth="true" fitToHeight="true" visible="true" fx:id="scrollContainer">
+                <content>
+                    <VBox fx:id="centerContainer" alignment="CENTER">
+                        <HBox fx:id="datepickerContainer" alignment="CENTER">
+                            <children>
+                                <DatePicker fx:id="datePicker"/>
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                            </padding>
+                            <Button fx:id="showBtn" text="show"/>
+                        </HBox>
+                        <Label fx:id="errorText"/>
+                        <Label fx:id="dateText"/>
+                        <Label fx:id="titleText"/>
+                        <ImageView fx:id="imageView" fitWidth="600" fitHeight="400" preserveRatio="true" />
+                        <Label fx:id="copyright"/>
+                        <Text fx:id="imageDescription" />
+                    </VBox>
+                </content>
+            </ScrollPane>
+
+            <!--ApiKey-->
+            <VBox fx:id="apiContainer" visible="false" alignment="CENTER">
+                <Label text="Actual API Key"/>
+                <Label fx:id="apiLabel"/>
+                <HBox alignment="CENTER" fx:id="btnContainer">
+                    <Label text="New API Key:"/>
+                    <TextField fx:id="setApiKey" style="-fx-text-fill: #000"/>
+                    <Button text="Set New Key" onAction="#onSetNewKeyButtonClick" />
+                </HBox>
+            </VBox>
+        </StackPane>
     </center>
 
 </BorderPane>

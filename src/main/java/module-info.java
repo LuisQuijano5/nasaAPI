@@ -15,6 +15,13 @@ module comprehensive.project.nasaapi {
     requires com.google.gson;
     requires okhttp3;
 
+    requires org.apache.poi.ooxml;
+    requires layout;
+    requires kernel;
+    requires org.slf4j;
+    requires org.apache.logging.log4j;
+    requires io;
+
     opens comprehensive.project.nasaapi.models;
     opens comprehensive.project.nasaapi.models.ivl;
 

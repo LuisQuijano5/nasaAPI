@@ -66,7 +66,6 @@ public class GalleryController {
 
     @FXML
     private void onPerformSearchButtonClick(){
-        System.out.println("Holaaaaaaaaaaaaaaaaaaaaaaaa");
         // Limpiar el TilePane antes de agregar nuevos elementos
         tilePane.getChildren().clear();
         //For each space in query add %20

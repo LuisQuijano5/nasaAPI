@@ -5,7 +5,7 @@
     -fx-text-fill: -txtColor0;
 }
 
-#topContainer, #centerContainer{
+#topContainer, #centerContainer, #stackContainer, #apiContainer{
     -fx-padding: 0.4em 0 0.2em 0.8em;
 }
 
@@ -14,12 +14,12 @@
     -fx-padding: 0.4em;
 }
 
-#topContainer, #container{
+#topContainer, #container, #stackContainer, #apiContainer{
     -fx-background-color: -bgColor1;
     -fx-spacing: 1em;
 }
 
-#centerContainer{
+#centerContainer, #stackContainer, #apiContainer{
     -fx-background-color: -bgColor2;
 }
 
@@ -55,15 +55,15 @@
     -fx-text-fill: black;
 }
 
-#toggleBtnsContainer {
+#toggleBtnsContainer{
     -fx-alignment: CENTER_RIGHT;
 }
 
-#toggleBtnsContainer .button{
+#toggleBtnsContainer .button, #btnContainer .button{
     -fx-background-color: -bgColor1;
 }
 
-#toggleBtnsContainer .button:hover{
+#toggleBtnsContainer .button:hover, #btnContainer .button:hover{
     -fx-background-color: -bgColor2;
 }
 
