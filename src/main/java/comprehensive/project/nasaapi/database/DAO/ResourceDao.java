@@ -13,11 +13,11 @@ public class ResourceDao {
 
     public AuxDao addResource(User user, String nasaId, String title, String type, String url, String description) throws IOException {
         String body = String.format("""
-                {"nasaId": %s,
+                {"nasaId": "%s",
                 "title": "%s",
                 "type": "%s",
                 "url": %s,
-                "description": %s}""", nasaId, title, type, url, description);
+                "description": "%s"}""", nasaId, title, type, url, description);
         String response = Connection.sendRequest(baseUrl, "POST", body, user.getToken());
 
         Response responseObj = gson.fromJson(response, Response.class);

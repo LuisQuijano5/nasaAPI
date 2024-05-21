@@ -37,10 +37,7 @@ public class SignUpController {
 
     public void initialize(){
         enableFields();
-        if(!App.darkTheme){
-            returnIcon.setIconColor(Paint.valueOf("black"));
-            App.themeHandler.applyLightTheme(container);
-        }
+
         StringProperty sharedText = new SimpleStringProperty();
         passwordField.textProperty().bindBidirectional(sharedText);
         visiblePasswordField.textProperty().bindBidirectional(sharedText);
@@ -73,6 +70,7 @@ public class SignUpController {
             enableFields();
             return;
         }
+
 
         //check that both the confirmation and password are the same
         if(passwordField.getText().compareTo(confirmPasswordField.getText()) != 0){

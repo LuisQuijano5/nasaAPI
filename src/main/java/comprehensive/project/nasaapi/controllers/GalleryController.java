@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -41,6 +42,8 @@ public class GalleryController {
     FontIcon closedEye;
     @FXML
     FontIcon openEye;
+    @FXML
+    FontIcon searchIcon;
     private boolean menuVisibility = true;
     @FXML
     private TextField queryField;
@@ -53,7 +56,10 @@ public class GalleryController {
     private Image imageAudio;
 
     public void initialize(){
-        if(!App.darkTheme){ App.themeHandler.applyLightTheme(container); }
+        if(!App.darkTheme){
+            App.themeHandler.applyLightTheme(container);
+            searchIcon.setIconColor(Paint.valueOf("black"));
+        }
         if(App.currentUser.getMenuVisibilityPref() == 0){
             menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
         }

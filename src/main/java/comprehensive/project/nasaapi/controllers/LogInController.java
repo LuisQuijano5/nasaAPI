@@ -38,10 +38,6 @@ public class LogInController {
     @FXML
     public void initialize(){
         enableFields();
-        if(!App.darkTheme){
-            returnIcon.setIconColor(Paint.valueOf("black"));
-            App.themeHandler.applyLightTheme(container);
-        }
 
         StringProperty sharedText = new SimpleStringProperty();
         passwordField.textProperty().bindBidirectional(sharedText);
@@ -63,6 +59,9 @@ public class LogInController {
     private void submit() throws IOException {
         //disableFields();
         //to avoid issues if the textfields are suddenly changed
+        if(!passwordIsVisible){
+            passwordField.setText(visiblePasswordField.getText());
+        }
         String name = usernameField.getText();
         String password = passwordField.getText();
 

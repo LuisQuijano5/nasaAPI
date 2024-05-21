@@ -41,7 +41,7 @@
                <TextField fx:id="queryField" promptText="Enter your prompt" />
                <Button fx:id="showBtnIvl" text="Search" onAction="#onPerformSearchButtonClick">
                    <graphic>
-                       <FontIcon iconLiteral="fas-search" iconColor="white" iconSize="20"/>
+                       <FontIcon fx:id="searchIcon" iconLiteral="fas-search" iconColor="white" iconSize="20"/>
                    </graphic>
                </Button>
                <ComboBox fx:id="mediaTypeComboBox" promptText="Select media type">

@@ -22,7 +22,7 @@ public class App extends Application {
     private static final BorderPane root = new BorderPane(); // app container
 
     // Creating some of the views
-    private static Parent welcomeView; // menu view
+    public static Parent welcomeView; // menu view
     private static Parent menuView;
     public static int menuConfig = 0;
 
@@ -131,11 +131,10 @@ public class App extends Application {
     public static void setWelcomeView() {
         hideMenu();
         root.setCenter(welcomeView);
-        changeCenterTheme(); //changing the theme or removing it since it's a static var of the app
     }
 
     public static void showMenu() {
-        if(App.currentUser.getColorModePref() == 0 && menuConfig == 0){
+        if(menuConfig == 0){
             menuConfig = 1;
             menuView = loader.loadFXML("views/menu-view.fxml");
         }

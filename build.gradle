@@ -57,6 +57,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.openjfx/javafx-web
     implementation 'org.openjfx:javafx-web:22.0.1'
 
+    // https://mvnrepository.com/artifact/org.openjfx/javafx-media
+    implementation group: 'org.openjfx', name: 'javafx-media', version: '23-ea+3'
+
     implementation 'com.squareup.okhttp3:okhttp:3.14.6'
 
     implementation 'com.itextpdf:itext7-core:8.0.3'

@@ -24,6 +24,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -60,6 +61,12 @@ public class ApodController {
     BorderPane container;
     @FXML
     FontIcon closedEye;
+    @FXML
+    FontIcon apodBtnIcon;
+    @FXML
+    FontIcon returnIcon;
+    @FXML
+    FontIcon modifyIcon;
     @FXML
     FontIcon openEye;
     @FXML
@@ -104,17 +111,21 @@ public class ApodController {
 
         if(!App.darkTheme){
             App.themeHandler.applyLightTheme(container);
+            returnIcon.setIconColor(Paint.valueOf("black"));
+            modifyIcon.setIconColor(Paint.valueOf("black"));
+            apodBtnIcon.setIconColor(Paint.valueOf("black"));
         }
         if(App.currentUser.getMenuVisibilityPref() == 0){
             menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
         }
 
+        //access control
         if(App.currentUser.isAdmin()){
             apiKeyBtn.setVisible(true);
-            apodBtn.setVisible(true);
         }
         if (App.currentUser.getApodPrivilege() == 2 || App.currentUser.isAdmin()){
             modify.setVisible(true);
+            apodBtn.setVisible(true);
         }
 
         try {

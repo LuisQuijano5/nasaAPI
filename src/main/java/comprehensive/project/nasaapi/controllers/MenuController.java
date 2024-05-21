@@ -16,12 +16,20 @@ public class MenuController {
     @FXML
     VBox container;
 
-    public void initialize(){
-        if(!App.darkTheme){
-            changeTheme();
-        }
-        else if(App.menuConfig == 1){
-            changeTheme();
+    public void initialize() {
+        if (App.currentUser == null) {
+            if (!App.darkTheme) {
+                changeTheme();
+            }
+        } else {
+            if(App.currentUser.getColorModePref() == 0 && App.darkTheme){
+                changeTheme();
+            } else if((App.currentUser.getColorModePref() == 0 && !App.darkTheme) || (App.currentUser.getColorModePref() == -1 && !App.darkTheme)){
+                App.darkTheme = true;
+                changeTheme();
+            } else if(App.currentUser.getColorModePref() == 1 && !App.darkTheme){
+                changeTheme();
+            }
         }
     }
 
@@ -47,6 +55,8 @@ public class MenuController {
 
     @FXML
     private void exit() {
+        App.menuConfig = 0;
+        App.currentUser = null;
         App.setWelcomeView();
     }
 
