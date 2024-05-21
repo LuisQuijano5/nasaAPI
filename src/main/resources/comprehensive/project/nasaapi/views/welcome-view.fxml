@@ -20,7 +20,7 @@
     <Label styleClass="title">Nasa Api App</Label>
 
     <ImageView fitHeight="200" fitWidth="200" preserveRatio="true">
-        <Image url="@../images/joke.jpg"/>
+        <Image url="@../images/nasalogo1.png"/>
     </ImageView>
 
     <VBox styleClass="btnBox">
@@ -33,6 +33,5 @@
         <Button fx:id="guestBtn" text="Continue as Guest" onAction="#continueAsGuest"/>
     </VBox>
 
-    <Text
-            text="Press Esc to exit full screen"/>
+    <Label styleClass="hint" text="Press Esc to exit full screen" />
 </VBox>

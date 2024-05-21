@@ -9,3 +9,7 @@
     -fx-spacing: 1em;
 }
 
+.hint{
+    -fx-text-fill: white;
+}
+
