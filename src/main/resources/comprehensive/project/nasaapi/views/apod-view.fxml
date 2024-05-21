@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="container"
@@ -27,11 +28,12 @@
             <Pane style="-fx-pref-width: 6em"/>
 
             <HBox fx:id="toggleBtnsContainer">
-                <Button fx:id="weekReportBtn" text="Last Week Report" onAction="#ongenerateReportButtonClick" visible="true">
+                <Button fx:id="modify" text="Records" onAction="#onAdminUserModButtonClick" visible="false">
                     <graphic>
-                        <FontIcon iconLiteral="far-file-pdf" iconColor="white" iconSize="20"/>
+                        <FontIcon iconLiteral="far-file-alt" iconColor="white" iconSize="20"/>
                     </graphic>
                 </Button>
+
                 <Button fx:id="apodBtn" text="APOD" onAction="#onLoadApodViewButtonClick" visible="false">
                     <graphic>
                         <FontIcon iconLiteral="fas-space-shuttle" iconColor="white" iconSize="20"/>
@@ -66,6 +68,12 @@
                         <Label fx:id="dateText"/>
                         <Label fx:id="titleText"/>
                         <ImageView fx:id="imageView" fitWidth="600" fitHeight="400" preserveRatio="true" />
+                        <Button fx:id="downloadtBtn" text="Download" onAction="#onDownLoadImageButtonClick" visible="false"
+                                style="-fx-background-color: rgba(255,255,255,0.29)">
+                            <graphic>
+                                <FontIcon iconLiteral="far-save" iconColor="white" iconSize="20"/>
+                            </graphic>
+                        </Button>
                         <Label fx:id="copyright"/>
                         <Text fx:id="imageDescription" />
                     </VBox>
@@ -82,6 +90,47 @@
                     <Button text="Set New Key" onAction="#onSetNewKeyButtonClick" />
                 </HBox>
             </VBox>
+
+            <!--Modify Administration-->
+            <ScrollPane fx:id="scrollAdmin" fitToWidth="true" visible="false">
+                <VBox fx:id="adminContainer" visible="false">
+                    <Button fx:id="weekReportBtn" text="Last Week Report" onAction="#ongenerateReportButtonClick" visible="true">
+                        <graphic>
+                            <FontIcon iconLiteral="far-file-pdf" iconColor="white" iconSize="20"/>
+                        </graphic>
+                    </Button>
+                    <Label text="Records Table"/>
+                    <TableView fx:id="tblRecords" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="tblColDay" text="DAY" prefWidth="150">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="day"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="tblColTitle" text="TITLE" prefWidth="150">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="title"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="tblColUrl" text="URL" prefWidth="150">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="url"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="tblColCredits" text="CREDITS" prefWidth="150">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="credits"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+                    <Button fx:id="reloadRecordTlBtn" text="Reload" onAction="#onreloadRecordTblButtonClick">
+                        <graphic>
+                            <FontIcon iconLiteral="far-clock" iconColor="white" iconSize="20"/>
+                        </graphic>
+                    </Button>
+                </VBox>
+            </ScrollPane>
         </StackPane>
     </center>
 

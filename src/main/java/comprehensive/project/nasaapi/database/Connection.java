@@ -31,6 +31,7 @@ public class Connection
         conn.connect();
 
         int responseCode = conn.getResponseCode();
+        System.out.println("responsecode: "+responseCode);
 
         return getString(conn, responseCode);
     }
@@ -51,9 +52,6 @@ public class Connection
     }
 
     public static String sendPatch(String restOfUrl, String bodyString, String token) {
-        System.out.println("token from sendPatch: " + token);
-        System.out.println("restOfUrl sendPatch: " + restOfUrl);
-        System.out.println("bodyString sendPatch: " + bodyString);
         String requestUrl = baseUrl + restOfUrl;
 
         OkHttpClient client = new OkHttpClient();

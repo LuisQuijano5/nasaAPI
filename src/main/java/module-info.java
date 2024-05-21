@@ -24,6 +24,7 @@ module comprehensive.project.nasaapi {
 
     opens comprehensive.project.nasaapi.models;
     opens comprehensive.project.nasaapi.models.ivl;
+    opens comprehensive.project.nasaapi.models.jsonApi;
 
     opens comprehensive.project.nasaapi to javafx.fxml;
     exports comprehensive.project.nasaapi;

@@ -5,7 +5,7 @@
     -fx-text-fill: -txtColor0;
 }
 
-#topContainer, #centerContainer, #stackContainer, #apiContainer{
+#topContainer, #centerContainer, #stackContainer, #apiContainer, #adminContainer{
     -fx-padding: 0.4em 0 0.2em 0.8em;
 }
 
@@ -14,12 +14,12 @@
     -fx-padding: 0.4em;
 }
 
-#topContainer, #container, #stackContainer, #apiContainer{
+#topContainer, #container, #stackContainer, #apiContainer, #adminContainer{
     -fx-background-color: -bgColor1;
     -fx-spacing: 1em;
 }
 
-#centerContainer, #stackContainer, #apiContainer{
+#centerContainer, #stackContainer, #apiContainer, #adminContainer{
     -fx-background-color: -bgColor2;
 }
 
@@ -59,7 +59,7 @@
     -fx-alignment: CENTER_RIGHT;
 }
 
-#toggleBtnsContainer .button, #btnContainer .button{
+#toggleBtnsContainer .button, #btnContainer .button, #adminContainer .button{
     -fx-background-color: -bgColor1;
 }
 
@@ -99,4 +99,35 @@
 
 .centerContainer{
     -fx-alignment: CENTER;
+}
+
+/* Estilo general para el TableView */
+
+.table-view {
+    -fx-background-color: --bgColor2;
+    -fx-text-fill: --txtColor0;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: --bgColor1;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: --bgColor2;
+    -fx-text-fill: --txtColor0;
+}
+
+.table-view .table-cell {
+    -fx-background-color: --bgColor2;
+    -fx-text-fill: --txtColor0;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-view .table-cell:selected {
+    -fx-background-color: --bgColor3;
+    -fx-text-fill: --txtColor0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: --txtColor0;
 }

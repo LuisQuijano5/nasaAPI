@@ -5,7 +5,10 @@ import com.google.gson.reflect.TypeToken;
 import comprehensive.project.nasaapi.database.Connection;
 import comprehensive.project.nasaapi.models.PicODay;
 import comprehensive.project.nasaapi.models.User;
+import comprehensive.project.nasaapi.models.jsonApi.DatumApi;
+import comprehensive.project.nasaapi.models.jsonApi.JsonApi;
 
+import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,23 +22,24 @@ public class PicODayDao {
                 "title": "%s",
                 "url": "%s",
                 "credits": "%s"}""", pic.getDay(), pic.getTitle(), pic.getUrl(), pic.getCredits());
+
         String response = Connection.sendRequest( baseUrl, "POST", body, user.getToken());
 
         Response responseObj = gson.fromJson(response, Response.class);
         return new AuxDao(responseObj.success, responseObj.message);
     }
 
-    public AuxDao getWeekPics(User user) throws IOException {
+    public List<DatumApi> getWeeksPics(User user) throws IOException {
         String response = Connection.sendGETRequest(baseUrl, user.getToken());
 
-        Response responseObj = gson.fromJson(response, Response.class);
-        if (responseObj.success) {
-            List<PicODay> pics = gson.fromJson(responseObj.data.toString(), new TypeToken<List<PicODay>>(){}.getType());
-            AuxDao auxDao = new AuxDao(true);
-            auxDao.setPics(pics);
-            return auxDao;
+        JsonApi responseObj = gson.fromJson(response, JsonApi.class);
+
+        if (responseObj.getSuccess()) {
+            List<DatumApi> pics = responseObj.getData();
+
+            return pics;
         } else {
-            return new AuxDao(false, "Error getting the week's images");
+            return null;
         }
     }
 }

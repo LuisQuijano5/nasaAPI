@@ -12,7 +12,6 @@ public class NasaKeyDao {
 
     public AuxDao updateKey(User user, String key) {
 
-        System.out.println("user from update: " + user.getToken());
         String body = String.format("""
                 {"key": "%s"}""", key);
         String response = Connection.sendPatch(baseUrl, body, user.getToken());
@@ -22,7 +21,7 @@ public class NasaKeyDao {
     }
 
 
-    public AuxDao getWeekPics() throws IOException {
+    public AuxDao getKey() throws IOException {
         String response = Connection.sendGETRequest(baseUrl, null);
 
         Response responseObj = gson.fromJson(response, Response.class);

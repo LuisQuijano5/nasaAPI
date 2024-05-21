@@ -1,5 +1,6 @@
 package comprehensive.project.nasaapi;
 
+import comprehensive.project.nasaapi.controllers.ApodController;
 import comprehensive.project.nasaapi.models.User;
 import comprehensive.project.nasaapi.services.*;
 import javafx.application.Application;
@@ -55,6 +56,10 @@ public class App extends Application {
         // setting stage
         root.setCenter(welcomeView);
         root.setStyle("-fx-font-size: 24px"); // using rem
+
+        ApodController apodController = new ApodController();
+        apodController.setPrimaryStage(stage);
+
         scene = new Scene(root);
         stage.setTitle("FinalProject");
         stage.setScene(scene);
@@ -80,6 +85,7 @@ public class App extends Application {
             showMessage.alert(Alert.AlertType.ERROR, "ERROR LOADING VIEW",
                     parent + " couldn't be loaded", "Please check the file or path");
         }
+
         root.setCenter(view);
     }
 

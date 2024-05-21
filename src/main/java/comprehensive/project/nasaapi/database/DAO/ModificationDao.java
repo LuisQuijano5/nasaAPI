@@ -18,7 +18,7 @@ public class ModificationDao {
                 {"userId": %d,
                 "timeOfMod": "%s",
                 "viewOfMod": "%s",
-                "action": %s}""", mod.getUserId(), mod.getTimeOfMod(), mod.getViewOfMod(), mod.getAction());
+                "action": "%s"}""", mod.getUserId(), mod.getTimeOfMod(), mod.getViewOfMod(), mod.getAction());
         String response = Connection.sendRequest(baseUrl, "POST", body, user.getToken());
 
         Response responseObj = gson.fromJson(response, Response.class);

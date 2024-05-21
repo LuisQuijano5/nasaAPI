@@ -104,7 +104,7 @@ public class APIConnectionAPOD {
 
     public static String getApiKey() {
             try {
-                auxDao = nasaKeyDao.getWeekPics();
+                auxDao = nasaKeyDao.getKey();
             } catch (IOException e) {
                 auxDao.getMessage();
             }

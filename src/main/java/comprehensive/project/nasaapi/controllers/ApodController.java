@@ -3,12 +3,18 @@ package comprehensive.project.nasaapi.controllers;
 import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.apiconnection.APIConnectionAPOD;
 import comprehensive.project.nasaapi.database.DAO.AuxDao;
+import comprehensive.project.nasaapi.database.DAO.ModificationDao;
 import comprehensive.project.nasaapi.database.DAO.NasaKeyDao;
+import comprehensive.project.nasaapi.database.DAO.PicODayDao;
 import comprehensive.project.nasaapi.models.APOD;
+import comprehensive.project.nasaapi.models.Modification;
+import comprehensive.project.nasaapi.models.PicODay;
 import comprehensive.project.nasaapi.models.User;
 import comprehensive.project.nasaapi.models.ivl.Ivl;
+import comprehensive.project.nasaapi.models.jsonApi.DatumApi;
 import comprehensive.project.nasaapi.reports.ApodReportGenerator;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,6 +24,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.google.gson.JsonObject;
@@ -34,11 +42,16 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,11 +79,11 @@ public class ApodController {
     @FXML
     private boolean menuVisibility = true;
     @FXML
-    VBox apiContainer;
+    VBox apiContainer, adminContainer;
     @FXML
-    ScrollPane scrollContainer;
+    ScrollPane scrollContainer, scrollAdmin;
     @FXML
-    Button apiKeyBtn, apodBtn;
+    Button apiKeyBtn, apodBtn, downloadtBtn, modify;
 
     @FXML
     private Label apiLabel;
@@ -81,9 +94,13 @@ public class ApodController {
 
     User user = App.currentUser;
 
+    @FXML
+    private Stage primaryStage;  // Reference to the primary stage
+    @FXML
+    TableView<DatumApi> tblRecords;
+    private PicODayDao picODayDao = new PicODayDao();
+
     public void initialize(){
-        NasaKeyDao keyDao = new NasaKeyDao();
-        AuxDao auxDao = new AuxDao();
 
         if(!App.darkTheme){
             App.themeHandler.applyLightTheme(container);
@@ -95,6 +112,9 @@ public class ApodController {
         if(App.currentUser.isAdmin()){
             apiKeyBtn.setVisible(true);
             apodBtn.setVisible(true);
+        }
+        if (App.currentUser.getApodPrivilege() == 2 || App.currentUser.isAdmin()){
+            modify.setVisible(true);
         }
 
         try {
@@ -118,6 +138,7 @@ public class ApodController {
         }catch (Exception e){
             e.printStackTrace();
             errorText.setText(e.toString());
+            System.out.println("error: " + e);
         }
     }
 
@@ -127,19 +148,26 @@ public class ApodController {
     }
 
     private void updateInfo(){
-        // Limpiar
+        // Clean
         dateText.setText("");
         titleText.setText("");
         imageView.setImage(null);
         imageDescription.setText("");
         errorText.setText("");
 
+        downloadtBtn.setVisible(true);
+
             try {
 
                 APOD apodData = APIConnectionAPOD.getApod();
-                //JsonObject apodData = APIConnectionAPOD.getApod();
 
                     Platform.runLater(() -> {
+                        String copyrightString = "";
+                        if (apodData.getCopyright() == null){
+                            copyrightString = "None";
+                        }else {
+                            copyrightString = apodData.getCopyright().replace("\n"," ");
+                        }
 
                         String date = apodData.getDate().toString();
                         dateText.setText("Date: " + date);
@@ -151,7 +179,6 @@ public class ApodController {
                         Image image = new Image(imageUrl);
                         imageView.setImage(image);
 
-                        String copyrightString = apodData.getCopyright();
                         copyright.setText("Image Credit & Copyright: " + copyrightString);
 
                         String description = apodData.getExplanation();
@@ -162,6 +189,7 @@ public class ApodController {
 
             }catch (Exception e){
                 errorText.setText(e.toString());
+                System.out.println("Error: " + e);
                 System.out.println(e);
             }
 
@@ -178,6 +206,8 @@ public class ApodController {
     private void onModifyKeyButtonClick(){
         scrollContainer.setVisible(false);
         apiContainer.setVisible(true);
+        adminContainer.setVisible(false);
+        scrollAdmin.setVisible(false);
 
         apiLabel.setText(APIConnectionAPOD.getApiKey());
 
@@ -187,6 +217,8 @@ public class ApodController {
     private void onLoadApodViewButtonClick(){
         apiContainer.setVisible(false);
         scrollContainer.setVisible(true);
+        adminContainer.setVisible(false);
+        scrollAdmin.setVisible(false);
     }
 
     @FXML
@@ -244,26 +276,139 @@ public class ApodController {
             List<APOD> apodList = APIConnectionAPOD.getApodsInRange(startDate, endDate);
 
 
-            File file = new File(DEST_Q);
-            file.getParentFile().mkdirs();
-            new ApodReportGenerator().createReport(apodList, DEST_Q);
-            System.out.println("Se creo PDF");
+            // Selecciona la ruta de destino
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save report");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+            fileChooser.setInitialFileName("APOD_Report_"+startDate +"_to_"+endDate+"_.pdf");
 
-            openFile(DEST_Q);
-        }catch (Exception e){
+            File file = fileChooser.showSaveDialog(primaryStage);
+            if (file != null) {
+                String destinationPath = file.getAbsolutePath();
+                new ApodReportGenerator().createReport(apodList, destinationPath);
+                showMessage("Success", "Report was successfully saved...", Alert.AlertType.INFORMATION);
+
+            } else {
+                showMessage("Warning", "The save operation was cancelled...", Alert.AlertType.WARNING);
+
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void openFile(String filename)
-    {
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File(filename);
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                // no application registered for PDFs
+    @FXML
+    private void onDownLoadImageButtonClick(){
+        try {
+            APOD apodData = APIConnectionAPOD.getApod();
+            String date ="";
+
+            String imageUrl = apodData.getUrl();
+            if (imageUrl == null || imageUrl.isEmpty()) {
+                errorText.setText("URL cannot be empty.");
+                return;
             }
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Image");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
+                    new FileChooser.ExtensionFilter("All Files", "*.*")
+            );
+
+            if (datePicker.getValue() == null){
+                LocalDate today = LocalDate.now();
+                date =today.toString();
+            }else {
+                date = datePicker.getValue().toString();
+            }
+
+            String defaultFileName = apodData.getTitle() + "_APOD_" + date;
+            fileChooser.setInitialFileName(defaultFileName);
+
+            File file = fileChooser.showSaveDialog(primaryStage);
+            if (file != null) {
+                try {
+                    downloadImage(imageUrl, file);
+                    String rastreo = "";
+
+                    if (apodData.getCopyright() == null){
+                        rastreo = "None";
+                    }else {
+                        rastreo = apodData.getCopyright().replace("\n"," ");
+                    }
+
+                    //Make a record
+                    PicODay picODay = new PicODay(date,apodData.getTitle(),apodData.getUrl(),rastreo);
+
+                    AuxDao auxdao = picODayDao.addPic(App.currentUser, picODay);
+
+                    //Make a Modification
+                    Modification mod = new Modification(App.currentUser.getId(), date, "APOD",
+                            "download image");
+
+                    ModificationDao modDao = new ModificationDao();
+                    modDao.registerModification(App.currentUser, mod);
+
+                    if(auxdao.isSuccess()){
+                        showMessage("Success", "Image downloaded successfully to " + file.getAbsolutePath(), Alert.AlertType.INFORMATION);
+
+                    }
+                    //errorText.setText("Image downloaded successfully to " + file.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                showMessage("Warning", "Save operation was cancelled...", Alert.AlertType.WARNING);
+
+            }
+        }catch (Exception e){
+            showMessage("Success", "Image downloaded successfully...", Alert.AlertType.INFORMATION);
+
+            showMessage("Warning", "Warning, this record is already in the database" + e.getMessage()+ "...", Alert.AlertType.WARNING);
+
+            //showMessage("Error", "Error " + e, Alert.AlertType.ERROR);
+            //errorText.setText(e.toString());
         }
+    }
+
+    private void downloadImage(String imageUrl, File destinationFile) throws IOException {
+
+        URL url = new URL(imageUrl);
+       Thread download = new Thread(() ->{
+           try (InputStream in = url.openStream()) {
+               Files.copy(in, destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       });
+       download.start();
+    }
+
+    // Setter for primaryStage, if needed
+    public void setPrimaryStage(Stage stage) {
+        this.primaryStage = stage;
+    }
+
+    @FXML
+    private void onAdminUserModButtonClick(){
+        scrollAdmin.setVisible(true);
+        adminContainer.setVisible(true);
+        apiContainer.setVisible(false);
+        scrollContainer.setVisible(false);
+
+    }
+
+    private void reloadRecordsTbl(){
+        try {
+            tblRecords.setItems(FXCollections.observableArrayList(new PicODayDao().getWeeksPics(App.currentUser)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void onreloadRecordTblButtonClick(){
+        reloadRecordsTbl();
     }
 }
