@@ -16,7 +16,7 @@ public class FavoritesDao {
 
     public AuxDao getFavs(User user) throws IOException {
         String newBaseUrl = "favorites?userId=" + user.getId();
-        String response = Connection.sendGETRequest(newBaseUrl, null);
+        String response = Connection.sendGETRequest(newBaseUrl, user.getToken());
 
         Response responseObj = gson.fromJson(response, Response.class);
         if (responseObj.success) {
@@ -25,7 +25,7 @@ public class FavoritesDao {
             auxDao.setFavs(favs);
             return auxDao;
         } else {
-            return new AuxDao(false, "Error getting your favorties");
+            return new AuxDao(false, responseObj.message);
         }
     }
 
@@ -34,7 +34,7 @@ public class FavoritesDao {
                 {"userId": %d,
                 "resourcesId": "%s",
                 "note": "%s"}""", favs.getUserId(), favs.getResourcesId(), favs.getNote());
-        String response = Connection.sendRequest( baseUrl, "POST", body, null);
+        String response = Connection.sendRequest( baseUrl, "POST", body, user.getToken());
 
         Response responseObj = gson.fromJson(response, Response.class);
         return new AuxDao(responseObj.success, responseObj.message);
@@ -44,7 +44,7 @@ public class FavoritesDao {
         String body = String.format("""
                 {"userId": %d,
                 "resourcesId": "%s"}""", fav.getUserId(), fav.getResourcesId());
-        String response = Connection.sendRequest(baseUrl, "DELETE", body, null);
+        String response = Connection.sendRequest(baseUrl, "DELETE", body, user.getToken());
 
         Response responseObj = gson.fromJson(response, Response.class);
         return new AuxDao(responseObj.success, responseObj.message);

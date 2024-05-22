@@ -26,7 +26,8 @@
     </top>
 
     <center>
-        <BorderPane>
+        <StackPane fx:id="contentPane">
+            <BorderPane>
             <top>
                 <VBox spacing="10" alignment="CENTER">
                     <padding>
@@ -44,6 +45,7 @@
             </top>
 
             <center>
+
                 <ScrollPane fx:id="srollPaneRover" fitToWidth="true"  fitToHeight="true">
                     <content>
                         <TilePane fx:id="imageTilePane" hgap="10" vgap="10" tileAlignment="TOP_LEFT">
@@ -55,6 +57,7 @@
                 </ScrollPane>
             </center>
         </BorderPane>
+        </StackPane>
     </center>
 
 </BorderPane>

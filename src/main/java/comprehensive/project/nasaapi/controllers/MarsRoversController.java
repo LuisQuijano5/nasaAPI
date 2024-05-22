@@ -3,16 +3,19 @@ package comprehensive.project.nasaapi.controllers;
 import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.apiconnection.APIConnectioMarsRovers;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -42,14 +45,34 @@ public class MarsRoversController {
     private TilePane imageTilePane;
     @FXML
     private Button searchButton;
+    @FXML
+    private StackPane contentPane;
 
     private boolean menuVisibility = true;
+    private int privilegeLevel;
 
     public void initialize(){
         if(!App.darkTheme){ App.themeHandler.applyLightTheme(container); }
         if(App.currentUser.getMenuVisibilityPref() == 0){
             menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
         }
+
+        if (App.currentUser.getEpicAccess() == 0) {
+            try {
+                // Cargar el archivo FXML de "no access"
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/comprehensive/project/nasaapi/views/no_access.fxml"));
+                Pane noAccessPane = loader.load();
+
+                // Reemplazar el contenido del contenedor con el contenido de "no access"
+                contentPane.getChildren().clear();
+                contentPane.getChildren().add(noAccessPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        privilegeLevel = App.currentUser.getEpicPrivilege();
 
         try {
             LocalDate currentDate = LocalDate.now();
@@ -59,7 +82,6 @@ public class MarsRoversController {
             roverComboBox.getSelectionModel().clearSelection();
 
             cameraComboBox.getItems().add("All Cameras");
-
 
             roverComboBox.setOnAction(event -> updateCameras());
 
@@ -107,6 +129,9 @@ public class MarsRoversController {
 
             if (camera.equals("All Cameras") || camera.equals(cameraName)) {
                 String imageUrl = photoObject.get("img_src").getAsString();
+                String photoId = photoObject.get("id").getAsString();
+                String earthDate = photoObject.get("earth_date").getAsString();
+                String roverName = photoObject.getAsJsonObject("rover").get("name").getAsString();
 
                 ImageView imageView = new ImageView();
                 imageView.setFitWidth(200);
@@ -119,7 +144,7 @@ public class MarsRoversController {
                 }
 
                 // Carga la imagen de forma asíncrona
-                loadImageAsync(imageUrl, imageView);
+                loadImageAsync(imageUrl, imageView, photoId, earthDate, cameraName, roverName);
 
                 // Agrega el ImageView al TilePane en el hilo de JavaFX
                 Platform.runLater(() -> {
@@ -135,15 +160,34 @@ public class MarsRoversController {
         Platform.runLater(() -> resultLabel.setText("Showing " + finalDisplayedPhotos + " results in this search."));
     }
 
-    private void loadImageAsync(String imageUrl, ImageView imageView) {
+    private void loadImageAsync(String imageUrl, ImageView imageView, String photoId, String earthDate, String cameraName, String roverName) {
         Thread loadImageThread = new Thread(() -> {
             try {
                 Image image = new Image(imageUrl, true);
                 Platform.runLater(() -> {
                     imageView.setImage(image);
+                    imageView.setOnMouseClicked(event -> {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/comprehensive/project/nasaapi/views/image_preview.fxml"));
+                            Stage previewStage = new Stage();
+                            previewStage.setTitle("Rover Preview");
+                            previewStage.initModality(Modality.APPLICATION_MODAL);
+                            Scene previewScene = new Scene(loader.load());
+                            ImagePreviewController previewController = loader.getController();
+                            previewController.setImage(image);
+                            previewController.setPhotoData(photoId, earthDate, cameraName, roverName);
+                            previewController.setPrivilegeLevel(privilegeLevel);
+
+                            previewStage.setTitle("Image Preview");
+                            previewStage.setScene(previewScene);
+                            previewStage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
                 });
             } catch (Exception e) {
-                // Aquí mostrar una imagen de placeholder en caso de error
+                e.printStackTrace();
             }
         });
         loadImageThread.setDaemon(true);

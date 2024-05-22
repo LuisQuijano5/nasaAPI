@@ -5,6 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import comprehensive.project.nasaapi.database.Connection;
 import comprehensive.project.nasaapi.models.Modification;
 import comprehensive.project.nasaapi.models.User;
+import comprehensive.project.nasaapi.models.jsonApi.DatumApi;
+import comprehensive.project.nasaapi.models.jsonApi.Example;
+import comprehensive.project.nasaapi.models.jsonApi.Modi;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,17 +28,16 @@ public class ModificationDao {
         return new AuxDao(responseObj.success, responseObj.message);
     }
 
-    public AuxDao getModifications(User user) throws IOException {
+    public List<Modi> getModifications(User user) throws IOException {
         String response = Connection.sendGETRequest(baseUrl, user.getToken());
 
-        Response responseObj = gson.fromJson(response, Response.class);
-        if (responseObj.success) {
-            List<Modification> mods = gson.fromJson(responseObj.data.toString(), new TypeToken<List<Modification>>(){}.getType());
-            AuxDao auxDao = new AuxDao(true);
-            auxDao.setMods(mods);
-            return auxDao;
+        Example responseObj = gson.fromJson(response, Example.class);
+        if (responseObj.getSuccess()) {
+            List<Modi> modi = responseObj.getData();
+
+            return modi;
         } else {
-            return new AuxDao(false, "Error getting all modifications");
+            return null;
         }
     }
 

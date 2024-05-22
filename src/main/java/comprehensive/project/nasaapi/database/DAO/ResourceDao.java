@@ -16,7 +16,7 @@ public class ResourceDao {
                 {"nasaId": "%s",
                 "title": "%s",
                 "type": "%s",
-                "url": %s,
+                "url": "%s",
                 "description": "%s"}""", nasaId, title, type, url, description);
         String response = Connection.sendRequest(baseUrl, "POST", body, user.getToken());
 

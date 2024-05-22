@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 public class ViewDao{
     private String baseUrl = "view/";
     private final Gson gson = new Gson();
+
     public AuxDao setViewPermits(int userId, String name, int value) throws IOException {
         String body = String.format("""
                 {"userId": %d,

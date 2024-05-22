@@ -10,6 +10,7 @@ public class PrivilegeDao
 {
     private String baseUrl = "privilege/";
     private final Gson gson = new Gson();
+
     public AuxDao setPrivilege(int userId, String name, int value) throws IOException {
         String body = String.format("""
                 {"userId": %d,

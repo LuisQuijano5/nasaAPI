@@ -1,0 +1,81 @@
+#buttonPref, #buttonUpdate, #buttonUpAcces, #buttonDelUser {
+    -fx-background-color: -bgColor1;
+    -fx-text-fill: -txtColor0;
+    -fx-border-color: -bgColor1;
+    -fx-border-width: 1px;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 18px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+
+
+.button:hover {
+    -fx-background-color: -bgColor3;
+    -fx-text-fill: -txtColor1;
+}
+
+.button:pressed {
+    -fx-background-color: -bgColor1;
+    -fx-text-fill: -txtColor0;
+}
+
+.combo-box {
+    -fx-background-color: -bgColor1;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 1px;
+    -fx-text-fill: -txtColor0;
+}
+
+/* Estilo para la lista desplegable */
+.combo-box-popup .list-view {
+    -fx-background-color: -bgColor1;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 1px;
+}
+/* Estilo para las celdas dentro de la lista desplegable */
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: -bgColor1;
+    -fx-text-fill: -txtColor0;
+}
+/* Estilo para la celda seleccionada y cuando se pasa el ratón por encima */
+.combo-box-popup .list-view .list-cell:selected,
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: -bgColor3;
+    -fx-text-fill: -txtColor0;
+}
+
+.table-view {
+    -fx-background-color: -bgColor1;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 1px;
+}
+
+/* Estilo para las filas del TableView */
+.table-view .table-row-cell {
+    -fx-background-color: -bgColor1;
+    -fx-text-fill: -txtColor0;
+}
+
+/* Estilo para las celdas del TableView */
+.table-view .table-cell {
+    -fx-background-color: -bgColor1;
+    -fx-text-fill: -txtColor0;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 0 1px 1px 0;
+}
+
+/* Estilo para la fila seleccionada en el TableView */
+.table-view .table-row-cell:selected {
+    -fx-background-color: -bgColor3;
+    -fx-text-fill: -txtColor0;
+}
+
+/* Estilo para el encabezado del TableView */
+.table-view .column-header {
+    -fx-background-color: -bgColor3;
+    -fx-text-fill: -txtColor0;
+    -fx-border-color: -bgColor3;
+    -fx-border-width: 0 1px 1px 0;
+}

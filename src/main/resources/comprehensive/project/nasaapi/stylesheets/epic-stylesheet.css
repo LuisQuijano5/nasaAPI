@@ -21,9 +21,8 @@
     -fx-text-fill: -txtColor0;
 }
 
-#searchButton {
+#searchButton , #buttonPreview{
     -fx-background-color: -bgColor2;
-
 }
 
 #imageTilePane {

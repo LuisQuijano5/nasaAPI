@@ -108,6 +108,5 @@ public class UserDao
             return new AuxDao(false, responseObj.message);
         }
     }
-
 }
 
