@@ -83,6 +83,62 @@
 
 /* Estilo general para el TableView */
 
+.table-view {
+    -fx-background-color: -bgColor2;
+    -fx-text-fill: -txtColor0;
+    -fx-border-color: -bgColor3;
+    -fx-table-cell-border-color: -bgColor1;
+    -fx-column-hgrow: ALWAYS;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -bgColor3;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: -bgColor2;
+    -fx-text-fill: -txtColor0;
+}
+
+.table-view .table-cell {
+    -fx-background-color: -bgColor2;
+    -fx-text-fill: -txtColor0;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-view .table-cell:selected {
+    -fx-background-color: -bgColor3;
+    -fx-text-fill: -txtColor0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -txtColor0;
+    -fx-font-weight: bold;
+    -fx-background-color: -bgColor3;
+}
+
+/* Alternating row colors */
+.table-view .table-row-cell:even {
+    -fx-background-color: -bgColor2;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: -bgColor1;
+}
+
+/* Styling the scrollbar */
+.table-view .scroll-bar:vertical {
+    -fx-background-color: -bgColor1;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: -bgColor1;
+}
+#processesArrivalTable {
+    -fx-max-width: 300px;
+}
+/* Estilo general para el TableView */
+
 
 .table-view {
     -fx-background-color: -bgColor2;

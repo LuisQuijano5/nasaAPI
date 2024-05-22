@@ -5,10 +5,6 @@ import comprehensive.project.nasaapi.App;
 import comprehensive.project.nasaapi.apiconnection.APIConnectionIVL;
 import comprehensive.project.nasaapi.models.ivl.*;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,10 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,8 +26,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
-
-//@../images/joke.jpg
 
 public class GalleryController {
     @FXML
@@ -158,8 +150,6 @@ public class GalleryController {
 
             String description = item.getData().get(0).getDescription();
 
-
-
             WebView webView = new WebView();
             webView.getEngine().load(imageUrl);
             webView.setPrefSize(300, 221);
@@ -176,6 +166,7 @@ public class GalleryController {
             tilePane.getChildren().add(resultBox);
 
             String finalUrl = imageUrl;
+            //expands photo by clicking
             webView.setOnMouseClicked(event -> {
                 if (finalUrl != null){
                     try {
@@ -203,12 +194,11 @@ public class GalleryController {
         try {
             String[] jsonLinks = linksExtractor(collection.getItems().get(i).getHref());
 
+            //Use a default image for every audio
             ImageView test = new ImageView(imageAudio);
 
             for (String link : jsonLinks){
                 if (link.endsWith(".mp3")){
-                    //webView.getEngine().load(link);
-
                     audioUrl = link;
                     break;
                 }
@@ -227,6 +217,7 @@ public class GalleryController {
             tilePane.getChildren().add(resultBox);
 
             String finalUrl = audioUrl;
+            //Load audio on clicking on the image
             test.setOnMouseClicked(event -> {
                 if (finalUrl != null){
                     try {
@@ -260,7 +251,6 @@ public class GalleryController {
 
             for (String link : jsonLinks){
                 if (link.endsWith(".mp4")){
-                    //webView.getEngine().load(link);
 
                     videoUrl = link;
                     break;
