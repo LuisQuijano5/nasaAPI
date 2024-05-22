@@ -36,7 +36,6 @@ public class PicODayDao {
 
         if (responseObj.getSuccess()) {
             List<DatumApi> pics = responseObj.getData();
-
             return pics;
         } else {
             return null;

@@ -57,7 +57,7 @@ public class MarsRoversController {
             menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
         }
 
-        if (App.currentUser.getEpicAccess() == 0) {
+        if (App.currentUser.getEpicAccess() == 0 && !App.currentUser.isAdmin()) {
             try {
                 // Cargar el archivo FXML de "no access"
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/comprehensive/project/nasaapi/views/no_access.fxml"));

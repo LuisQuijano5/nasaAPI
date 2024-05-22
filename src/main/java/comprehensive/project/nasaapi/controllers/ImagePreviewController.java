@@ -27,7 +27,7 @@ public class ImagePreviewController {
     public void setPrivilegeLevel(int privilegeLevel) {
 
         // Verificar el nivel de privilegio y mostrar/ocultar el botón de favoritos
-        if (privilegeLevel == 0) {
+        if (privilegeLevel == 0 && !App.currentUser.isAdmin()) {
             buttonPreview.setVisible(false);
         } else {
             buttonPreview.setVisible(true);

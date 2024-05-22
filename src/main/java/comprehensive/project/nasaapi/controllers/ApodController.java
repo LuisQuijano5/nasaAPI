@@ -91,6 +91,7 @@ public class ApodController {
     @FXML
     TableView<DatumApi> tblRecords;
     private PicODayDao picODayDao = new PicODayDao();
+    private int privilegeLevel;
 
     public void initialize(){
 
@@ -113,6 +114,8 @@ public class ApodController {
             apodBtn.setVisible(true);
         }
 
+        privilegeLevel = App.currentUser.getApodPrivilege();
+
         try {
             LocalDate currentDate = LocalDate.now();
             datePicker.setPromptText(currentDate.toString());
@@ -134,7 +137,7 @@ public class ApodController {
         }catch (Exception e){
             e.printStackTrace();
             errorText.setText(e.toString());
-            System.out.println("error: " + e);
+            //System.out.println("error: " + e);
         }
     }
 
@@ -255,6 +258,10 @@ public class ApodController {
 
     @FXML
     private void ongenerateReportButtonClick(){//
+        if(privilegeLevel < 2 && !App.currentUser.isAdmin()){
+            App.showMessage.alert(Alert.AlertType.ERROR, "UNAUTHORIZED", "Error", "You dont have permission to do this");
+            return;
+        }
         try {
             LocalDate today = LocalDate.now();
 
@@ -298,6 +305,10 @@ public class ApodController {
     and a modification in DB*/
     @FXML
     private void onDownLoadImageButtonClick(){
+        if(privilegeLevel < 1 && !App.currentUser.isAdmin()){
+            App.showMessage.alert(Alert.AlertType.ERROR, "UNAUTHORIZED", "Error", "You dont have permission to do this");
+            return;
+        }
         try {
             APOD apodData = APIConnectionAPOD.getApod();
             String date ="";
