@@ -108,7 +108,7 @@ public class ApodController {
         if(App.currentUser.isAdmin()){
             apiKeyBtn.setVisible(true);
         }
-        if (App.currentUser.getApodPrivilege() == 2 || App.currentUser.isAdmin()){
+        if (App.currentUser.getApodAccess() == 2 || App.currentUser.isAdmin()){
             modify.setVisible(true);
             apodBtn.setVisible(true);
         }
