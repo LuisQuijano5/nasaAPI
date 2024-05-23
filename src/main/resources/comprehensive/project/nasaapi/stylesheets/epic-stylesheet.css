@@ -97,3 +97,11 @@
 .lightTheme #datepickerContainer .date-picker-popup .spinner .button:hover {
     -fx-background-color: -bgColor2;
 }
+
+.empty-heart {
+    -fx-fill: grey;
+}
+
+.filled-heart {
+    -fx-fill: red;
+}

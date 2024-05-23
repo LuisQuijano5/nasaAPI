@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,14 +19,22 @@ public class ImagePreviewController {
     private ImageView imagePreview;
     @FXML
     private Button buttonPreview;
+    @FXML
+    private FontIcon heartIcon;
+
+    private boolean isFavorited = false;
 
     private String photoId;
     private String earthDate;
     private String cameraName;
     private String roverName;
 
-    public void setPrivilegeLevel(int privilegeLevel) {
+    @FXML
+    public void initialize() {
+        heartIcon.getStyleClass().add("empty-heart");
+    }
 
+    public void setPrivilegeLevel(int privilegeLevel) {
         // Verificar el nivel de privilegio y mostrar/ocultar el botón de favoritos
         if (privilegeLevel == 0 && !App.currentUser.isAdmin()) {
             buttonPreview.setVisible(false);
@@ -66,6 +75,9 @@ public class ImagePreviewController {
             AuxDao favoriteResult = favoritesDao.addToFavorite(App.currentUser, favorite);
 
             if (favoriteResult.isSuccess()) {
+                isFavorited = !isFavorited;
+                heartIcon.getStyleClass().clear();
+                heartIcon.getStyleClass().add(isFavorited ? "filled-heart" : "empty-heart");
                 System.out.println("Image added to favorites successfully");
             } else {
                 System.out.println("Error adding image to favorites");

@@ -10,7 +10,6 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -87,6 +86,8 @@ public class AccountController {
     private TableColumn<Modi, String> viewOfModColumn;
     @FXML
     private TableColumn<Modi, String> actionColumn;
+    @FXML
+    private Button deleteModificationsButton;
 
     private FavoritesDao favoritesDao = new FavoritesDao();
     private boolean menuVisibility = true;
@@ -117,6 +118,12 @@ public class AccountController {
         } else if(App.currentUser.getAccountAccess() == 3 || App.currentUser.isAdmin()){
             modificationsBtn.setVisible(true);
             usersBtn.setVisible(true);
+        }
+
+        if (App.currentUser.getAccountPrivilege() == 2 || App.currentUser.isAdmin()) {
+            deleteModificationsButton.setVisible(true);
+        } else {
+            deleteModificationsButton.setVisible(false);
         }
 
         comboBoxMode.getItems().addAll("Light", "Dark");
@@ -153,8 +160,6 @@ public class AccountController {
         accountAccessComboBox.getItems().addAll(1, 2, 3);
         accountPrivilegeComboBox.getItems().addAll(1, 2);
 
-
-
         // delete this when testing is done
         //myAccountBtn.setVisible(true); // for testing
         //modificationsBtn.setVisible(true); // for testing
@@ -165,11 +170,13 @@ public class AccountController {
         visiblePasswordField.textProperty().bindBidirectional(sharedText);
     }
 
+    // Método para cambiar la visibilidad del menú
     @FXML
     private void changeMenuVisibility() {
         menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
     }
 
+    // Método para establecer la sección "My Account"
     @FXML
     private void setMyAccountSection(){
         loadToggleButtons(1);
@@ -178,6 +185,7 @@ public class AccountController {
         String currentUsername = currentUser.getName();
         String currentPassword = currentUser.getPassword();
 
+        //Sin Platform.runLater no se obtiene la contraseña
         Platform.runLater(() -> {
             usernameField.setText(currentUsername);
             passwordField.setText(currentPassword);
@@ -187,67 +195,14 @@ public class AccountController {
 
     }
 
-    @FXML
-    private void setModificationsSection() throws IOException {
-        loadToggleButtons(2);
-        showModifications();
-    }
-
-    @FXML
-    private void setUsersSection() throws IOException {
-        loadToggleButtons(3);
-        showUsers();
-
-        usersTableView.setRowFactory(tv -> {
-            TableRow<User> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1 && !row.isEmpty()) {
-                    User selectedUser = usersTableView.getSelectionModel().getSelectedItem();
-                    System.out.println("Usuario seleccionado: " + selectedUser.getName());
-
-                    try {
-                        AuxDao privilegeAuxDao = privilegeDao.getPrivilegeByUserId(selectedUser.getId());
-                        AuxDao viewAuxDao = viewDao.getViewsByUserId(selectedUser.getId());
-
-                        if (privilegeAuxDao.isSuccess() && viewAuxDao.isSuccess()) {
-                            int[] privilegeValues = privilegeAuxDao.getValues();
-                            int[] viewValues = viewAuxDao.getValues();
-
-                            /*System.out.println("APOD Access: " + viewValues[0]);
-                            System.out.println("APOD Privilege: " + privilegeValues[0]);
-                            System.out.println("Gallery Access: " + viewValues[1]);
-                            System.out.println("Gallery Privilege: " + privilegeValues[1]);
-                            System.out.println("Epic Access: " + viewValues[2]);
-                            System.out.println("Epic Privilege: " + privilegeValues[2]);
-                            System.out.println("Account Access: " + viewValues[3]);
-                            System.out.println("Account Privilege: " + privilegeValues[3]);*/
-
-                            apodAccessComboBox.getSelectionModel().select(viewValues[0]);
-                            apodPrivilegeComboBox.getSelectionModel().select(privilegeValues[0]);
-                            galleryAccessComboBox.getSelectionModel().select(viewValues[1]);
-                            galleryPrivilegeComboBox.getSelectionModel().select(privilegeValues[1]-1);
-                            epicAccessComboBox.getSelectionModel().select(viewValues[2]);
-                            epicPrivilegeComboBox.getSelectionModel().select(privilegeValues[2]);
-                            accountAccessComboBox.getSelectionModel().select(viewValues[3] - 1);
-                            accountPrivilegeComboBox.getSelectionModel().select(privilegeValues[3] - 1);
-                        } else {
-                            System.out.println("Error al obtener los valores de acceso y privilegio");
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            return row;
-        });
-    }
-
+    // Método para cambiar la visibilidad de la contraseña
     @FXML
     private void changePasswordVisibility() {
         passwordIsVisible = App.passwordSwitch.toogleVisibility(passwordField, visiblePasswordField, passwordContainer,
                 visiblePasswordContainer, passwordIsVisible);
     }
 
+    // Método para actualizar la información del usuario (username, password)
     @FXML
     private void updateUserInfo() throws IOException {
         String pastName = App.currentUser.getName();
@@ -286,39 +241,21 @@ public class AccountController {
         }
     }
 
-    @FXML
-    private void showUsers() throws IOException {
-        AuxDao auxDao = userDao.getUsers(App.currentUser);
-        if (auxDao.isSuccess()) {
-            List<User> usersList = auxDao.getUsers();
-            usersTableView.setItems(FXCollections.observableList(usersList));
-        }
-    }
-
-    @FXML
-    private void deleteUser() throws IOException {
-        User selectedUser = usersTableView.getSelectionModel().getSelectedItem();
-        if (selectedUser != null) {
-            AuxDao auxDao = userDao.deleteUser(App.currentUser, selectedUser.getId());
-            if (auxDao.isSuccess()) {
-                showUsers(); // Actualizar la tabla de usuarios después de la eliminación
-            }
-        }
-    }
-
+    // Método para actualizar las preferencias
     @FXML
     private void updatePref() throws IOException {
         String selectedMode = comboBoxMode.getSelectionModel().getSelectedItem();
         String selectedMenu = comboBoxMenu.getSelectionModel().getSelectedItem();
 
-        int modeValue = selectedMode.equals("Light") ? 0 : 1;
-        int menuValue = selectedMenu.equals("Minimized") ? 0 : 1;
+        int modeValue = selectedMode.equals("Light") ? 0 : 1; // Convertir selección de modo a valor numérico
+        int menuValue = selectedMenu.equals("Minimized") ? 0 : 1; // Convertir selección de menú a valor numérico
 
+        // Actualizar preferencias en la base de datos
         AuxDao modeResult = prefDao.updatePreference(App.currentUser, App.currentUser.getId(), modeValue, "darkMode");
         AuxDao menuResult = prefDao.updatePreference(App.currentUser, App.currentUser.getId(), menuValue, "menuVisibility");
 
+        //Verificar si las actualizaciones fueron exitosas
         if (modeResult.isSuccess() && menuResult.isSuccess()) {
-            // Actualizar las preferencias en el objeto User
             App.currentUser.setColorModePref(modeValue);
             App.currentUser.setMenuVisibilityPref(menuValue);
             System.out.println("Preferences updated successfully");
@@ -327,6 +264,8 @@ public class AccountController {
         }
     }
 
+
+    // Método para mostrar los favoritos
     @FXML
     private void showFavorites() throws IOException {
         AuxDao auxDao = favoritesDao.getFavs(App.currentUser);
@@ -338,6 +277,14 @@ public class AccountController {
         }
     }
 
+    // Método para establecer la sección "Modifications"
+    @FXML
+    private void setModificationsSection() throws IOException {
+        loadToggleButtons(2);
+        showModifications();
+    }
+
+    // Método para mostrar las modificaciones
     @FXML
     private void showModifications() {
         try {
@@ -352,6 +299,7 @@ public class AccountController {
         }
     }
 
+    // Método para eliminar las modificaciones
     @FXML
     private void deleteModifications() {
         try {
@@ -366,13 +314,70 @@ public class AccountController {
         }
     }
 
-    private void loadToggleButtons(int section){
-        guestsSection.setVisible(section == 0);
-        myAccountSection.setVisible(section == 1);
-        modificationsSection.setVisible(section == 2);
-        usersSection.setVisible(section == 3);
+    // Método para establecer la sección "Users"
+    @FXML
+    private void setUsersSection() throws IOException {
+        loadToggleButtons(3);
+        showUsers();
+
+        usersTableView.setRowFactory(tv -> {
+            TableRow<User> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1 && !row.isEmpty()) {
+                    User selectedUser = usersTableView.getSelectionModel().getSelectedItem();
+                    System.out.println("Usuario seleccionado: " + selectedUser.getName());
+
+                    try {
+                        AuxDao privilegeAuxDao = privilegeDao.getPrivilegeByUserId(selectedUser.getId());
+                        AuxDao viewAuxDao = viewDao.getViewsByUserId(selectedUser.getId());
+
+                        if (privilegeAuxDao.isSuccess() && viewAuxDao.isSuccess()) {
+                            int[] privilegeValues = privilegeAuxDao.getValues();
+                            int[] viewValues = viewAuxDao.getValues();
+
+                            apodAccessComboBox.getSelectionModel().select(viewValues[0]);
+                            apodPrivilegeComboBox.getSelectionModel().select(privilegeValues[0]);
+                            galleryAccessComboBox.getSelectionModel().select(viewValues[1]);
+                            galleryPrivilegeComboBox.getSelectionModel().select(privilegeValues[1]-1);
+                            epicAccessComboBox.getSelectionModel().select(viewValues[2]);
+                            epicPrivilegeComboBox.getSelectionModel().select(privilegeValues[2]);
+                            accountAccessComboBox.getSelectionModel().select(viewValues[3] - 1);
+                            accountPrivilegeComboBox.getSelectionModel().select(privilegeValues[3] - 1);
+                        } else {
+                            System.out.println("Error al obtener los valores de acceso y privilegio");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            return row;
+        });
     }
 
+    // Método para mostrar los usuarios
+    @FXML
+    private void showUsers() throws IOException {
+        AuxDao auxDao = userDao.getUsers(App.currentUser);
+        if (auxDao.isSuccess()) {
+            List<User> usersList = auxDao.getUsers();
+            usersTableView.setItems(FXCollections.observableList(usersList));
+        }
+    }
+
+    // Método para eliminar un usuario
+    @FXML
+    private void deleteUser() throws IOException {
+        User selectedUser = usersTableView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            AuxDao auxDao = userDao.deleteUser(App.currentUser, selectedUser.getId());
+            if (auxDao.isSuccess()) {
+                showUsers(); // Actualizar la tabla de usuarios después de la eliminación
+            }
+        }
+    }
+
+    // Método para actualizar los niveles de acceso y privilegios
     @FXML
     private void updateAccess() throws IOException {
         User selectedUser = usersTableView.getSelectionModel().getSelectedItem();
@@ -430,5 +435,13 @@ public class AccountController {
                 System.out.println("Error updating access and privilege levels");
             }
         }
+    }
+
+    // Método auxiliar para cargar los botones de alternancia
+    private void loadToggleButtons(int section){
+        guestsSection.setVisible(section == 0);
+        myAccountSection.setVisible(section == 1);
+        modificationsSection.setVisible(section == 2);
+        usersSection.setVisible(section == 3);
     }
 }

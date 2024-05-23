@@ -8,6 +8,7 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            stylesheets="@../stylesheets/epic-stylesheet.css, @../stylesheets/general-stylesheet.css"
@@ -18,7 +19,11 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
         </padding>
         <ImageView fx:id="imagePreview" fitWidth="400" fitHeight="400" preserveRatio="true" />
-        <Button fx:id="buttonPreview" text="Favoritos" alignment="CENTER"
-                onAction="#handleFavoriteButton"/>
+        <Button fx:id="buttonPreview" alignment="CENTER"
+                onAction="#handleFavoriteButton">
+            <graphic>
+                <FontIcon fx:id="heartIcon" iconLiteral="far-heart" iconSize="24" />
+            </graphic>
+        </Button>
     </VBox>
 </StackPane>

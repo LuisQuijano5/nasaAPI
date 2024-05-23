@@ -1,4 +1,4 @@
-#buttonPref, #buttonUpdate, #buttonUpAcces, #buttonDelUser {
+#buttonPref, #buttonUpdate, #buttonUpAcces, #buttonDelUser, #deleteModificationsButton {
     -fx-background-color: -bgColor1;
     -fx-text-fill: -txtColor0;
     -fx-border-color: -bgColor1;
@@ -8,8 +8,6 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
 }
-
-
 
 .button:hover {
     -fx-background-color: -bgColor3;

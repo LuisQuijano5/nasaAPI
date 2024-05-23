@@ -76,6 +76,11 @@ public class App extends Application {
         ScreenSize screenService = new ScreenSize(scene, stage);
         screenService.fullScreen();
 
+        //Forzar cierre
+        stage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
+
         stage.show();
     }
 

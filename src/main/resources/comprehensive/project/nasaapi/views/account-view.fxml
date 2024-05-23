@@ -70,14 +70,16 @@
                         </StackPane>
                     </VBox>
                 </HBox>
+                <VBox alignment="CENTER">
+                    <Button fx:id="buttonUpdate" text="Update" onAction="#updateUserInfo" alignment="CENTER"/>
+                </VBox>
                 <HBox spacing="10" alignment="CENTER">
                     <Label text="Mode"/>
                     <ComboBox fx:id="comboBoxMode"/>
                     <Label text="Menu"/>
                     <ComboBox fx:id="comboBoxMenu"/>
-                    <Button fx:id="buttonPref" text="Pref" onAction="#updatePref"  />
+                    <Button fx:id="buttonPref" text="Save" onAction="#updatePref"  />
                 </HBox>
-                <Button fx:id="buttonUpdate" text="Update" onAction="#updateUserInfo" alignment="CENTER"/>
 
                 <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                     <Label text="Favorites Table"/>
