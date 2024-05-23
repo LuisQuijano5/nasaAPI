@@ -65,8 +65,8 @@ public class App extends Application {
         stage.setScene(scene);
         //stage.setMinWidth(250);
         //stage.setMinHeight(350);
-
-        stage.setFullScreen(true);
+        stage.setMaximized(true);
+        //stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
 
         //media

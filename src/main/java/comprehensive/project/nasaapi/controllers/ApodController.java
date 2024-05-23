@@ -139,6 +139,8 @@ public class ApodController {
             errorText.setText(e.toString());
             //System.out.println("error: " + e);
         }
+
+        reloadRecordsTbl();
     }
 
     @FXML

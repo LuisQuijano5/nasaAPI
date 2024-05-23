@@ -92,7 +92,7 @@
             </VBox>
 
             <!--Modify Administration-->
-            <ScrollPane fx:id="scrollAdmin" fitToWidth="true" visible="false">
+            <ScrollPane fx:id="scrollAdmin" fitToWidth="true" fitToHeight="true" visible="false">
                 <VBox fx:id="adminContainer" visible="false" alignment="CENTER">
                     <Button fx:id="weekReportBtn" text="Last Week Report" onAction="#ongenerateReportButtonClick" visible="true">
                         <graphic>

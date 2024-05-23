@@ -9,6 +9,10 @@
     -fx-background-radius: 5px;
 }
 
+#buttonPref:hover,  #buttonUpdate:hover, #buttonUpAcces:hover, #buttonDelUser:hover, #deleteModificationsButton:hover{
+    -fx-background-color: -bgColor0;
+}
+
 .button:hover {
     -fx-background-color: -bgColor3;
     -fx-text-fill: -txtColor1;
@@ -45,20 +49,18 @@
 }
 
 .table-view {
-    -fx-background-color: -bgColor1;
     -fx-border-color: -bgColor3;
     -fx-border-width: 1px;
 }
 
 /* Estilo para las filas del TableView */
 .table-view .table-row-cell {
-    -fx-background-color: -bgColor1;
+    -fx-background-color: -bgColor2;
     -fx-text-fill: -txtColor0;
 }
 
 /* Estilo para las celdas del TableView */
 .table-view .table-cell {
-    -fx-background-color: -bgColor1;
     -fx-text-fill: -txtColor0;
     -fx-border-color: -bgColor3;
     -fx-border-width: 0 1px 1px 0;
@@ -66,14 +68,18 @@
 
 /* Estilo para la fila seleccionada en el TableView */
 .table-view .table-row-cell:selected {
-    -fx-background-color: -bgColor3;
+    -fx-background-color: -bgColor1;
+}
+
+/* Estilo para la fila seleccionada en el TableView */
+.table-view .table-row-cell:selected * {
     -fx-text-fill: -txtColor0;
 }
 
 /* Estilo para el encabezado del TableView */
 .table-view .column-header {
-    -fx-background-color: -bgColor3;
+    -fx-background-color: -bgColor1;
     -fx-text-fill: -txtColor0;
-    -fx-border-color: -bgColor3;
+    -fx-font-weight: bold;
     -fx-border-width: 0 1px 1px 0;
 }
