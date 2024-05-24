@@ -110,6 +110,7 @@ public class ApodController {
             apiKeyBtn.setVisible(true);
         }
         if (App.currentUser.getApodAccess() == 2 || App.currentUser.isAdmin()){
+            reloadRecordsTbl();
             modify.setVisible(true);
             apodBtn.setVisible(true);
         }
@@ -140,7 +141,6 @@ public class ApodController {
             //System.out.println("error: " + e);
         }
 
-        reloadRecordsTbl();
     }
 
     @FXML
