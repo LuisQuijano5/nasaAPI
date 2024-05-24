@@ -6,6 +6,7 @@ import comprehensive.project.nasaapi.models.Resource;
 import comprehensive.project.nasaapi.models.User;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class ResourceDao {
     private String baseUrl = "resource/";
@@ -19,9 +20,11 @@ public class ResourceDao {
                 "url": "%s",
                 "description": "%s"}""", nasaId, title, type, url, description);
         String response = Connection.sendRequest(baseUrl, "POST", body, user.getToken());
-
         Response responseObj = gson.fromJson(response, Response.class);
-        return new AuxDao(responseObj.success, responseObj.message);
+        if(Objects.equals(responseObj.message, "It was already registered") || responseObj.success) {
+            return new AuxDao(true, responseObj.message);
+        }
+        return new AuxDao(false, responseObj.message);
     }
 
     public AuxDao getResource(User user, String nasaId) throws IOException {

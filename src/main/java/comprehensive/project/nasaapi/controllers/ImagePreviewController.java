@@ -56,7 +56,6 @@ public class ImagePreviewController {
 
     @FXML
     private void handleFavoriteButton() throws IOException {
-        // Lógica para guardar la información en la tabla "Resources" y asociarla con el usuario en la tabla "Favorites"
         ResourceDao resourceDao = new ResourceDao();
         FavoritesDao favoritesDao = new FavoritesDao();
         LocalDate localDate = LocalDate.now();
@@ -68,22 +67,38 @@ public class ImagePreviewController {
         String date = earthDate;
         String description = "ID: " + photoId + ", Camera: " + cameraName + ", Earth Date: " + earthDate + ", Rover: " + roverName;
 
-        AuxDao resourceResult = resourceDao.addResource(App.currentUser, photoId, title, type, url, description);
-
-        if (resourceResult.isSuccess()) {
+        if (isFavorited) {
+            // Si la imagen ya está en favoritos, eliminarla
             Favorites favorite = new Favorites(App.currentUser.getId(), photoId, favDate);
-            AuxDao favoriteResult = favoritesDao.addToFavorite(App.currentUser, favorite);
+            AuxDao favoriteResult = favoritesDao.deleteFromFavorite(App.currentUser, favorite);
 
             if (favoriteResult.isSuccess()) {
-                isFavorited = !isFavorited;
+                isFavorited = false;
                 heartIcon.getStyleClass().clear();
-                heartIcon.getStyleClass().add(isFavorited ? "filled-heart" : "empty-heart");
-                System.out.println("Image added to favorites successfully");
+                heartIcon.getStyleClass().add("empty-heart");
+                System.out.println("Image removed from favorites successfully");
             } else {
-                System.out.println("Error adding image to favorites");
+                System.out.println("Error removing image from favorites");
             }
         } else {
-            System.out.println("Error saving image to resources");
+            // Si la imagen no está en favoritos, agregarla
+            AuxDao resourceResult = resourceDao.addResource(App.currentUser, photoId, title, type, url, description);
+
+            if (resourceResult.isSuccess()) {
+                Favorites favorite = new Favorites(App.currentUser.getId(), photoId, favDate);
+                AuxDao favoriteResult = favoritesDao.addToFavorite(App.currentUser, favorite);
+
+                if (favoriteResult.isSuccess()) {
+                    isFavorited = true;
+                    heartIcon.getStyleClass().clear();
+                    heartIcon.getStyleClass().add("filled-heart");
+                    System.out.println("Image added to favorites successfully");
+                } else {
+                    System.out.println("Error adding image to favorites");
+                }
+            } else {
+                System.out.println("Error saving image to resources");
+            }
         }
     }
 }

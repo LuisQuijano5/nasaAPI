@@ -88,6 +88,8 @@ public class AccountController {
     private TableColumn<Modi, String> actionColumn;
     @FXML
     private Button deleteModificationsButton;
+    @FXML
+    private Button deleteFavorites;
 
     private FavoritesDao favoritesDao = new FavoritesDao();
     private boolean menuVisibility = true;
@@ -275,6 +277,17 @@ public class AccountController {
         } else {
             System.out.println("Error retrieving favorites");
         }
+    }
+
+    @FXML
+        private void deleteFavorites() throws IOException {
+       Favorites favorites = favoritesTableView.getSelectionModel().getSelectedItem();
+       if (favorites != null) {
+           AuxDao auxDao = favoritesDao.deleteFromFavorite(App.currentUser, favorites);
+       if (auxDao.isSuccess()) {
+           showFavorites();
+       }
+       }
     }
 
     // Método para establecer la sección "Modifications"
