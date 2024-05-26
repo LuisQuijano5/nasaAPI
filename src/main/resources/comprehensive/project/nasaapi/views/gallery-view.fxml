@@ -30,11 +30,12 @@
     </top>
 
     <center>
-       <VBox fx:id="centerContainer" maxHeight="-Infinity">
+       <VBox fx:id="centerContainer" maxHeight="-Infinity" visible="true">
+           <Label fx:id="accessLbl" text="You have no access..." visible="false"/>
            <padding>
                <Insets top="10" right="10" bottom="10" left="10"/>
            </padding>
-           <HBox>
+           <HBox fx:id="searchContainer" visible="true">
                <padding>
                    <Insets top="10" right="10" bottom="10" left="10"/>
                </padding>
@@ -56,7 +57,7 @@
                </ComboBox>
 
            </HBox>
-           <ScrollPane fx:id="scrollPaneContainer" fitToWidth="true" fitToHeight="true">
+           <ScrollPane fx:id="scrollPaneContainer" fitToWidth="true" fitToHeight="true" visible="true">
                <TilePane fx:id="tilePane" prefHeight="400.0" prefWidth="600.0" >
                    <ImageView fitHeight="200" fitWidth="200" preserveRatio="true" visible="false" >
                        <Image fx:id="imageAudio" url="@../images/audio.jpg"/>

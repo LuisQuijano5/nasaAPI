@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
@@ -46,6 +47,12 @@ public class GalleryController {
     private TilePane tilePane;
     @FXML
     private Image imageAudio;
+    @FXML
+    private Label accessLbl;
+    @FXML
+    private HBox searchContainer;
+    @FXML
+    private ScrollPane scrollPaneContainer;
 
     public void initialize(){
         if(!App.darkTheme){
@@ -54,6 +61,12 @@ public class GalleryController {
         }
         if(App.currentUser.getMenuVisibilityPref() == 0){
             menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
+        }
+
+        if (App.currentUser.getGalleryAccess() == 0){
+            accessLbl.setVisible(true);
+            searchContainer.setVisible(false);
+            scrollPaneContainer.setVisible(false);
         }
     }
 
