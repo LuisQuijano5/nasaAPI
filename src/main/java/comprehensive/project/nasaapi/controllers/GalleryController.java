@@ -63,7 +63,7 @@ public class GalleryController {
             menuVisibility = App.menuSwitch.switchMenu(menuVisibility, openEye, closedEye);
         }
 
-        if (App.currentUser.getGalleryAccess() == 0){
+        if (App.currentUser.getGalleryAccess() == 0 && !App.currentUser.isAdmin()){
             accessLbl.setVisible(true);
             searchContainer.setVisible(false);
             scrollPaneContainer.setVisible(false);
