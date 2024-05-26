@@ -90,6 +90,8 @@ public class AccountController {
     private Button deleteModificationsButton;
     @FXML
     private Button deleteFavorites;
+    @FXML
+    ScrollPane myAccountScroll, usersScroll;
 
     private FavoritesDao favoritesDao = new FavoritesDao();
     private boolean menuVisibility = true;
@@ -182,6 +184,8 @@ public class AccountController {
     @FXML
     private void setMyAccountSection(){
         loadToggleButtons(1);
+        myAccountScroll.setVisible(true);
+        usersScroll.setVisible(false);
 
         User currentUser = App.currentUser;
         String currentUsername = currentUser.getName();
@@ -295,6 +299,8 @@ public class AccountController {
     private void setModificationsSection() throws IOException {
         loadToggleButtons(2);
         showModifications();
+        myAccountScroll.setVisible(false);
+        usersScroll.setVisible(false);
     }
 
     // Método para mostrar las modificaciones
@@ -332,6 +338,8 @@ public class AccountController {
     private void setUsersSection() throws IOException {
         loadToggleButtons(3);
         showUsers();
+        myAccountScroll.setVisible(false);
+        usersScroll.setVisible(true);
 
         usersTableView.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();

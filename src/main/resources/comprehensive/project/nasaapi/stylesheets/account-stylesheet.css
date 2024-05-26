@@ -52,6 +52,7 @@
 .table-view {
     -fx-border-color: -bgColor3;
     -fx-border-width: 1px;
+    -fx-min-height: 200px;
 }
 
 /* Estilo para las filas del TableView */
@@ -84,3 +85,5 @@
     -fx-font-weight: bold;
     -fx-border-width: 0 1px 1px 0;
 }
+
+

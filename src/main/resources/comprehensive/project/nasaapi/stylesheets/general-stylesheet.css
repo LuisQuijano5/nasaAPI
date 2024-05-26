@@ -81,6 +81,7 @@
     -fx-font-size: 0.8em;
     -fx-padding: 1em;
     -fx-spacing: 1em;
+    -fx-background-color: -bgColor2;
 }
 
 .section .sectionTitle{
