@@ -156,7 +156,9 @@ public class ApodController {
         imageDescription.setText("");
         errorText.setText("");
 
-        downloadtBtn.setVisible(true);
+        if (App.currentUser.getApodPrivilege() != 0 && App.currentUser.getApodAccess() != 0){
+            downloadtBtn.setVisible(true);
+        }
 
             try {
 

@@ -32,6 +32,4 @@
         </HBox>
         <Button fx:id="guestBtn" text="Continue as Guest" onAction="#continueAsGuest"/>
     </VBox>
-
-    <Label styleClass="hint" text="Press Esc to exit full screen" />
 </VBox>

@@ -23,7 +23,7 @@ public class WelcomeController {
 
     @FXML
     private void continueAsGuest() {
-        App.currentUser = new User(-1, "Guest", false, 1, 1, 1, 1, 1, 1, 0, 1, -1, 1);
+        App.currentUser = new User(-1, "Guest", false, 1, 0, 1, 1, 1, 0, 0, 1, -1, 1);
 
         App.showMenu();
         App.changeView("apod");
